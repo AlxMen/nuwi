@@ -1,7 +1,6 @@
 
 
-
-export default function LoginForm() {
+export default async function LoginForm() {
   return (
     <>
       <div className="space-y-2">
