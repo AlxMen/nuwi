@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String       @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  password String
+  role     String
+  ext      Int
+  email    String       @unique
+  exps     Proceeding[]
+}
+
+model Proceeding {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  nExp       Int
+  name       String
+  type       String
+  assessment String
+  exhibit    String
+  createdexp DateTime
+  lastupdate DateTime
+  userId     String     @db.ObjectId
+  lastuser   User       @relation(fields: [userId], references: [id])
+  documents  Document[]
+}
+
+model Document {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  nDoc      Int
+  nExp      Int
+  name      String
+  tipo      String
+  entrance  DateTime
+  exit      DateTime
+  proceedId String     @db.ObjectId
+  proceed   Proceeding @relation(fields: [proceedId], references: [id])
+}

@@ -1,7 +1,7 @@
 
 
 import AddLoginForm from "@/components/login/AddLoginForm";
-import Header from "@/components/login/Header";
+import Header from "@/components/ui/Header";
 import LoginForm from "@/components/login/LoginForm";
 
 export default function Home() {

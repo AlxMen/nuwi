@@ -1,6 +1,7 @@
 export const User = [
   {
     name: "Agustina Martin Santana",
+    user: "tmartin",
     password: "AMSantana13",
     role: "Técnico",
     ext: 41913,
@@ -8,6 +9,7 @@ export const User = [
   },
   {
     name: "Benita Ruiz Hernandez",
+    user: "bruiz",
     password: "BRHernandez17",
     role: "Técnico",
     ext: 41917,
@@ -15,6 +17,7 @@ export const User = [
   },
   {
     name: "Carmen del Pilar Suarez Godoy",
+    user: "csuarezg",
     password: "CPSGodoy73",
     role: "Subalterna/o",
     ext: 19473,
@@ -22,6 +25,7 @@ export const User = [
   },
   {
     name: "Cristina Marrero Suarez",
+    user: "cmarreros",
     password: "CMSuarez33",
     role: "Administrativa/o",
     ext: 41933,
@@ -29,6 +33,7 @@ export const User = [
   },
   {
     name: "Juan Jose Alonso Moreno",
+    user: "jjalonsom",
     password: "JJAMoreno21",
     role: "Delineante",
     ext: 41921,
@@ -36,6 +41,7 @@ export const User = [
   },
   {
     name: "Manuel Julian Perez Lorenzo",
+    user: "mjperezl",
     password: "MJPLorenzo26",
     role: "Técnico",
     ext: 41926,
@@ -43,6 +49,7 @@ export const User = [
   },
   {
     name: "Maria Elena Moreno Davila",
+    user: "emorenod",
     password: "MEMDavila24",
     role: "Técnico",
     ext: 41924,
@@ -50,6 +57,7 @@ export const User = [
   },
   {
     name: "Maria Francisca Gonzalez Jepsen",
+    user: "jepsen",
     password: "MFGJepsen12",
     role: "Jefatura Negocido Administrativa/o",
     ext: 41912,
@@ -57,6 +65,7 @@ export const User = [
   },
   {
     name: "Samuel Aza Rodriguez",
+    user: "sazar",
     password: "SARofriguez28",
     role: "Técnico",
     ext: 41928,
@@ -64,13 +73,15 @@ export const User = [
   },
   {
     name: "Soraya Paloma Palomo Medina",
+    user: "sppalomom",
     password: "SPPMedina11",
     role: "Jurídica/o",
     ext: 41911,
-    email: "@grancanaria.com",
+    email: "sppalomom@grancanaria.com",
   },
   {
     name: "Teresa Pilar Rivero Ramos",
+    user: "privero",
     password: "TPRRamos",
     role: "Jefatura de Servicio",
     ext: 19217,
@@ -78,6 +89,7 @@ export const User = [
   },
   {
     name: "Toñi Alvarez Martel",
+    user: "aalvarezm",
     password: "TAMartel14",
     role: "Técnico",
     ext: 41914,
@@ -85,6 +97,7 @@ export const User = [
   },
   {
     name: "Alejandro Jose Cruz Santiago",
+    user: "ajcruzs",
     password: "AJCSantiago0",
     role: "Informatica/o Practicas",
     ext: 0,
@@ -92,6 +105,7 @@ export const User = [
   },
   {
     name: "Elena Medero Suarez",
+    user: "emederosr",
     password: "EMRamos0",
     role: "Juridica/o Practicas",
     ext: 0,
@@ -99,6 +113,7 @@ export const User = [
   },
   {
     name: "Selenia Cristina Vera Rodriguez",
+    user: "scverar",
     password: "SCVRodriguez0",
     role: "Ambientologa/o Practicas",
     ext: 0,
@@ -106,6 +121,7 @@ export const User = [
   },
   {
     name: "Victor Eduardo Castellano Araujo",
+    user: "vecastellanoa",
     password: "VECAraujo0",
     role: "Arquitecta/o Practicas",
     ext: 0,
