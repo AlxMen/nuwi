@@ -17,6 +17,13 @@ model User {
   exps     Proceeding[]
 }
 
+model Category {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  index Int
+  slug  String
+}
+
 model Proceeding {
   id         String     @id @default(auto()) @map("_id") @db.ObjectId
   nExp       Int

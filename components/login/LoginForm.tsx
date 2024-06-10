@@ -4,7 +4,7 @@ export default async function LoginForm() {
   return (
     <>
       <div className="space-y-2">
-        <label htmlFor="name" className="text-slate-700 font-bold">
+        <label htmlFor="name" className="text-slate-700 text-2xl font-bold">
           Usuario:
         </label>
         <input
@@ -16,7 +16,7 @@ export default async function LoginForm() {
         />
       </div>
       <div className="space-y-2">
-        <label htmlFor="password" className="text-slate-700 font-bold">
+        <label htmlFor="password" className="text-slate-700 text-2xl font-bold">
           Contraseña:
         </label>
         <input

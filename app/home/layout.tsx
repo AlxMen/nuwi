@@ -1,4 +1,4 @@
-import Header from "@/components/ui/Header";
+import Header from "@/components/home/Header";
 import React from "react";
 
 export default function HomeLayout({
@@ -10,7 +10,7 @@ export default function HomeLayout({
     <>
       <Header />
       <div className="md:flex">
-        <main className="fixed md:flex-1 md:h-screen">{children}</main>
+        <main className="fixed md:w-screen flex md:flex-1 md:h-screen">{children}</main>
       </div>
     </>
   );
