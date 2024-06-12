@@ -1,4 +1,8 @@
 
 export default function PlansPage() {
-  return <div>PlansPage</div>;
+  return (
+    <>
+      <div className=""></div>
+    </>
+  );
 }

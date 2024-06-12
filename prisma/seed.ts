@@ -1,17 +1,36 @@
-import { User } from "./data/User";
-import { Entities } from "./data/Entitie";
+import { asociacionesEco } from "./data/Asociaciones_Ecologistas";
+import { asociacionesVec } from "./data/Asociaciones_de_Vecinos";
+import { asociacionesCaza } from "./data/Asosiaciones_de_Caza";
+import { Ayuntamiento } from "./data/Ayuntamiento";
+import { Cabildo } from "./data/Cabildo";
+import { emergencias } from "./data/Emergencias";
+import { Conserjerias } from "./data/Gobierno";
 import { PrismaClient } from "@prisma/client";
-import { Categories } from "./data/Categories";
 
 const prisma = new PrismaClient();
 
 async function main() {
   try {
-    //await prisma.user.createMany({
-    //  data: User,
-    //});
-    await prisma.category.createMany({
-      data: Categories
+    await prisma.gobierno.createMany({
+      data: Conserjerias,
+    });
+    await prisma.cabildo.createMany({
+      data: Cabildo
+    });
+    await prisma.ayuntamiento.createMany({
+      data: Ayuntamiento,
+    });
+    await prisma.asociacionesEco.createMany({
+      data: asociacionesEco,
+    });
+    await prisma.asociacionesVec.createMany({
+      data: asociacionesVec
+    })
+    await prisma.asociacionesCaza.createMany({
+      data: asociacionesCaza,
+    });
+    await prisma.emergencia.createMany({
+      data: emergencias
     })
   } catch (error) {
     console.log(error);
@@ -24,6 +43,6 @@ main()
   })
   .catch(async (e) => {
     console.error(e);
-    await prisma.$disconnect()
-    process.exit(1)
+    await prisma.$disconnect();
+    process.exit(1);
   });

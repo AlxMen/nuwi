@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Header() {
   return (
     <>
-      <div className="bg-blue-900 w-full h-32 gap-4 shadow-lg grid grid-cols-3 items-center border-b-4 border-white rounded-b-lg">
+      <header className="bg-blue-900 w-full h-32 gap-4 shadow-lg grid grid-cols-3 items-center border-b-4 border-white rounded-b-lg">
         <div className="relative h-32 w-52">
           <Image
             fill
@@ -23,7 +23,7 @@ export default function Header() {
             alt="logo del programa"
           />
         </div>
-      </div>
+      </header>
     </>
   );
 }

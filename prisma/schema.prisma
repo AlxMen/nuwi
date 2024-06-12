@@ -49,3 +49,52 @@ model Document {
   proceedId String     @db.ObjectId
   proceed   Proceeding @relation(fields: [proceedId], references: [id])
 }
+
+model Ministerio {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+}
+
+model Gobierno {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  conserjeria     String
+  viceconserjeria String?
+}
+
+model Cabildo {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  conserjeria String?
+  servicio    String?
+}
+
+model Ayuntamiento {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+}
+
+model AsociacionesEco {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  direccion String
+  cp        Int
+}
+
+model AsociacionesVec {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  direccion    String
+  cp           Int
+  municipio String
+}
+
+model AsociacionesCaza {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+}
+
+model Emergencia {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+}

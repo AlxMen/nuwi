@@ -9,9 +9,10 @@ export default function HomeLayout({
   return (
     <>
       <Header />
-      <div className="md:flex">
-        <main className="fixed md:w-screen flex md:flex-1 md:h-screen">{children}</main>
-      </div>
+
+      <main className="fixed max-h-[calc(100vh-6rem)] md:w-screen flex md:flex-1 md:h-screen">
+        {children}
+      </main>
     </>
   );
 }

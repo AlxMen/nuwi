@@ -7,8 +7,6 @@ type CategoriesProps = {
 };
 
 export default function Categories({ category }: CategoriesProps) {
-
-  console.log(category.slug);
   
   return (
     <Link
