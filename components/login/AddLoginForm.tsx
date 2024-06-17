@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function AddLoginForm({
   children,
 }: {
@@ -17,6 +19,9 @@ export default function AddLoginForm({
             className="bg-blue-500 hover:bg-blue-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer rounded-xl"
             value="Iniciar Sesion"
           />
+          <Link href={"/home"}>
+            Ir a Home
+          </Link>
         </form>
       </div>
     </>

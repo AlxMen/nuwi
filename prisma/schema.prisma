@@ -29,10 +29,10 @@ model Proceeding {
   nExp       Int
   name       String
   type       String
-  assessment String
-  exhibit    String
+  status     String     @default("Presentación")
+  applicant  String
   createdexp DateTime
-  lastupdate DateTime
+  lastupdate DateTime?
   userId     String     @db.ObjectId
   lastuser   User       @relation(fields: [userId], references: [id])
   documents  Document[]
@@ -82,10 +82,10 @@ model AsociacionesEco {
 }
 
 model AsociacionesVec {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  direccion    String
-  cp           Int
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  direccion String
+  cp        Int
   municipio String
 }
 
