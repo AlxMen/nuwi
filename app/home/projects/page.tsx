@@ -1,6 +1,7 @@
 "use client"
 import CardProjects from "@/components/projects/CardProjects";
 import CreateNewProject from "@/components/projects/CreateNewProject";
+import EditProject from "@/components/projects/EditProject";
 import NavBar from "@/components/ui/NavBar";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
@@ -8,6 +9,7 @@ import { FaPlus } from "react-icons/fa";
 export default function ProjectPage() {
 
   const [showModal, setShowModal] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
 
 
   return (
@@ -29,12 +31,13 @@ export default function ProjectPage() {
             </p>
           </button>
         </div>
-        <div className="grid xl:grid-cols-2 h-full w-full bg-slate-100 p-4 gap-6 overflow-y-auto">
-          <CardProjects />
+        <div className="xl:grid xl:grid-cols-2 h-full w-full bg-slate-100 p-4 xl:gap-6 overflow-y-auto">
+          <CardProjects setModal={setShowModalEdit} />
           
         </div>
       </div>
       <CreateNewProject showModal={showModal} setShowModal={setShowModal} />
+      <EditProject showModal={showModalEdit} setShowModal={setShowModalEdit} />
     </>
   );
 }

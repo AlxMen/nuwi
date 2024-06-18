@@ -5,9 +5,14 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react";
+import { Dispatch, SetStateAction } from "react";
 import { BsList } from "react-icons/bs";
 
-export default function MenuCard() {
+type MenuCardProps = {
+  setModal: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function MenuCard({setModal}: MenuCardProps) {
   return (
     <Menu>
       <MenuButton className="text-white text-4xl">
@@ -31,7 +36,9 @@ export default function MenuCard() {
             </button>
           </MenuItem>
           <MenuItem>
-            <button className="group bg-green-600 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-green-700">
+            <button className="group bg-green-600 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-green-700"
+            onClick={() => setModal(true)}
+            >
               Editar
             </button>
           </MenuItem>
