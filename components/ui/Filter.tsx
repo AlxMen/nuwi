@@ -14,17 +14,20 @@ export default function Filter() {
         <div className="flex items-center gap-2 w-full h-fit">
           <input
             className="size-5"
-            type="checkbox"
+            type="radio"
             name="name"
             id="name"
             value="Nombre"
+            defaultChecked
           />
-          <h3>Nombre</h3>
+          <h3 className="flex items-center gap-1">
+            Fecha <FaArrowDown />
+          </h3>
         </div>
         <div className="flex items-center gap-2 w-full h-fit">
           <input
             className="size-5"
-            type="checkbox"
+            type="radio"
             name="name"
             id="name"
             value="Nombre"
@@ -36,24 +39,22 @@ export default function Filter() {
         <div className="flex items-center gap-2 w-full h-fit">
           <input
             className="size-5"
-            type="checkbox"
-            name="name"
-            id="name"
-            value="Nombre"
-          />
-          <h3 className="flex items-center gap-1">
-            Fecha <FaArrowDown />
-          </h3>
-        </div>
-        <div className="flex items-center gap-2 w-full h-fit">
-          <input
-            className="size-5"
-            type="checkbox"
+            type="radio"
             name="name"
             id="name"
             value="Nombre"
           />
           <h3>Nº Expediente</h3>
+        </div>
+        <div className="flex items-center gap-2 w-full h-fit">
+          <input
+            className="size-5"
+            type="radio"
+            name="name"
+            id="name"
+            value="Nombre"
+          />
+          <h3>Nombre</h3>
         </div>
       </form>
     </div>

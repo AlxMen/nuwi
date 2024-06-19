@@ -5,23 +5,22 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react";
+import { FaEllipsisVertical } from "react-icons/fa6";
 import { Dispatch, SetStateAction, useState } from "react";
-import { BsList } from "react-icons/bs";
 import DeleteConfirm from "./DeleteConfirm";
 
-type MenuCardProps = {
+type MenuDocProps = {
   setModal: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function MenuCard({ setModal }: MenuCardProps) {
-
-  const [open, setOpen] = useState(false)
+export default function MenuDoc({ setModal }: MenuDocProps) {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <Menu>
-        <MenuButton className="text-white text-4xl">
-          <BsList />
+        <MenuButton className="text-lg">
+          <FaEllipsisVertical />
         </MenuButton>
         <Transition
           enter="transition ease-out duration-75"
@@ -49,7 +48,10 @@ export default function MenuCard({ setModal }: MenuCardProps) {
               </button>
             </MenuItem>
             <MenuItem>
-              <button className="group bg-red-600 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-red-700" onClick={() => setOpen(true)}>
+              <button
+                className="group bg-red-600 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-red-700"
+                onClick={() => setOpen(true)}
+              >
                 Eliminar
               </button>
             </MenuItem>
