@@ -3,11 +3,13 @@ import CardProjects from "@/components/projects/CardProjects";
 import CreateNewProject from "@/components/projects/CreateNewProject";
 import EditProject from "@/components/projects/EditProject";
 import NavBar from "@/components/ui/NavBar";
+import { useStore } from "@/src/store";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 export default function ProjectPage() {
 
+  const projects = useStore((state) => state.projects)
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
 
