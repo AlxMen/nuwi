@@ -15,7 +15,11 @@ export default function Header() {
             />
           </Link>
         </div>
-        <div className="mr-5 text-3xl text-white font-bold">Usuario</div>
+        <div className="mr-5 text-3xl text-white font-bold">
+          <Link href={"/user"} className="hover:italic hover:underline">
+            Usuario
+          </Link>
+        </div>
       </header>
     </>
   );

@@ -8,6 +8,7 @@ import {
 import { Dispatch, SetStateAction, useState } from "react";
 import { BsList } from "react-icons/bs";
 import DeleteConfirm from "./DeleteConfirm";
+import Link from "next/link";
 
 type MenuCardProps = {
   setModal: Dispatch<SetStateAction<boolean>>;
@@ -36,9 +37,11 @@ export default function MenuCard({ setModal }: MenuCardProps) {
             className="w-52 origin-top-right rounded-xl shadow-2xl bg-white p-1 space-y-2 text-white text-md [--anchor-gap:var(--spacing-1)] focus:outline-none"
           >
             <MenuItem>
-              <button className="group bg-blue-700 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-blue-800">
+              <Link
+                href={"/home/projects/1"}
+                className="group bg-blue-700 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-blue-800">
                 Abrir
-              </button>
+              </Link>
             </MenuItem>
             <MenuItem>
               <button
