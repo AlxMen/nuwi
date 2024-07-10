@@ -1,4 +1,5 @@
 // pages/api/upload.ts
+"use server"
 import fs from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
@@ -7,6 +8,9 @@ export async function POST(request: Request) {
   try {
     // Obtener el archivo del cuerpo de la solicitud
     const formData = await request.formData();
+    console.log(formData);
+    
+    /*
     const file = formData.get("file") as File | null;
     // Guardar el archivo en el servidor
     const filename = file ? `${Date.now()}_${file.name}` : "defaultFile";
@@ -31,6 +35,7 @@ export async function POST(request: Request) {
       message: "Archivo subido correctamente",
       filePath: relativePath,
     });
+    */
   } catch (error) {
     return NextResponse.json(
       { message: (error as Error).message },

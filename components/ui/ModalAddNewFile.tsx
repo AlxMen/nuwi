@@ -2,21 +2,10 @@
 import { useState } from "react";
 import DocumentUploader from "./DocumentUploader";
 
-type FormData = {
-  name: string;
-  date: string;
-  registrationNumber: string;
-  file: File | null;
-};
+
 export default function ModalAddNewFile() {
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    date: "",
-    registrationNumber: "",
-    file: null,
-  });
-
+  /*
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
@@ -28,6 +17,9 @@ export default function ModalAddNewFile() {
         const response = await fetch("/api/upload", {
           method: "POST",
           body: formData.file,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
 
         if (response.ok) {
@@ -49,23 +41,26 @@ export default function ModalAddNewFile() {
       }
     }
   };
+  */
+  
+  
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: keyof FormData
-  ) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [field]: e.target.value,
-    }));
-  };
+  // const handleInputChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   field: keyof FormData
+  // ) => {
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [field]: e.target.value,
+  //   }));
+  // };
 
-  const handleFileChange = (file: File | null) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      file,
-    }));
-  };
+  // const handleFileChange = (file: File | null) => {
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     file,
+  //   }));
+  // };
 
   return (
     <>
@@ -96,75 +91,10 @@ export default function ModalAddNewFile() {
                   </button>
                 </div>
                 {/*body*/}
-                <form onSubmit={handleSubmit}>
-                  <div className="relative p-6 flex-auto bg-slate-100">
-                    <div className="grid grid-cols-2 p-2 gap-8 mb-4">
-                      <div className="flex flex-col">
-                        <label htmlFor="name" className="font-bold">
-                          Nombre del documento:
-                        </label>
-                        <input
-                          id="name"
-                          type="text"
-                          className="h-8 w-full border border-black placeholder:text-center rounded-md"
-                          placeholder="Nombre del Documento"
-                          value={formData.name}
-                          onChange={(e) => handleInputChange(e, "name")}
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <label htmlFor="date" className="font-bold">
-                          Fecha:
-                        </label>
-                        <input
-                          id="date"
-                          type="date"
-                          className="h-8 w-fit border border-black text-center rounded-md"
-                          value={formData.date}
-                          onChange={(e) => handleInputChange(e, "date")}
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <label
-                          htmlFor="registrationNumber"
-                          className="font-bold"
-                        >
-                          Nº Registro:
-                        </label>
-                        <input
-                          id="registrationNumber"
-                          type="text"
-                          className="h-8 w-fit border border-black text-center rounded-md"
-                          placeholder="RS/RE00000"
-                          value={formData.registrationNumber}
-                          onChange={(e) =>
-                            handleInputChange(e, "registrationNumber")
-                          }
-                        />
-                      </div>
-                    </div>
-                    <DocumentUploader
-                      file={formData.file}
-                      setFile={handleFileChange}
-                    />
-                  </div>
-                  {/*footer*/}
-                  <div className="flex items-center justify-end p-6 border-t border-black bg-yellow-400 rounded-b">
-                    <button
-                      className="bg-red-500 text-white active:bg-red-600 hover:bg-red-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="submit"
-                    >
-                      Añadir Documento
-                    </button>
-                  </div>
-                </form>
+
+                <DocumentUploader
+                  setShowModal={setShowModal}
+                />
               </div>
             </div>
           </div>
