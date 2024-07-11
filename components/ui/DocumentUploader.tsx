@@ -1,5 +1,8 @@
+import { createDocument } from "@/actions/create-document-action";
+import { DocumentSchema } from "@/src/schema";
 import { Dispatch, SetStateAction, useState } from "react";
 import { BsFileEarmarkPdf } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 type DocumentUploaderProps = {
   setShowModal: Dispatch<SetStateAction<boolean>>;
@@ -12,15 +15,25 @@ export default function DocumentUploader({
 
   const handleActionSubmit = (formData: FormData) => {
 
-    if (file) {
-      formData.append("file", file);
+    file ? formData.append("file", file.name) : formData.append("file", "")
+    
+    const data = {
+      name: formData.get("name"),
+      date: formData.get("date"),
+      regisNumber: formData.get("registrationNumber"),
+      path: formData.get("file"),
     }
-    console.log(
-      formData.get("file"),
-      formData.get("name"),
-      formData.get("date"),
-      formData.get("registrationNumber")
-    );
+    
+    const result = DocumentSchema.safeParse(data);
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        toast.error(issue.message);
+      })
+    }
+    
+
+    return
+    createDocument()
   };
   
 

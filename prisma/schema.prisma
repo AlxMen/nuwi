@@ -39,15 +39,13 @@ model Proceeding {
 }
 
 model Document {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  nDoc      Int
-  nExp      Int
-  name      String
-  tipo      String
-  entrance  DateTime
-  exit      DateTime
-  proceedId String     @db.ObjectId
-  proceed   Proceeding @relation(fields: [proceedId], references: [id])
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  regisNumber String
+  date        DateTime
+  path        String
+  proceedId   String     @db.ObjectId
+  proceed     Proceeding @relation(fields: [proceedId], references: [id])
 }
 
 model Ministerio {
