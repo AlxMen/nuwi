@@ -1,5 +1,6 @@
 import { createDocument } from "@/actions/create-document-action";
 import { DocumentSchema } from "@/src/schema";
+import { currentDate } from "@/src/utils/currentDate";
 import { Dispatch, SetStateAction, useState } from "react";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { toast } from "react-toastify";
@@ -13,9 +14,13 @@ export default function DocumentUploader({
 }: DocumentUploaderProps) {
   const [file, setFile] = useState<File | null>();
 
-  const handleActionSubmit = (formData: FormData) => {
+  const handleActionSubmit = async (formData: FormData) => {
 
-    file ? formData.append("file", file.name) : formData.append("file", "")
+    const filename = file ? `${currentDate()}_${file.name}` : "defaultFile";
+
+    const filePath = `./public/uploads/${filename}`;
+
+    file ? formData.append("file", filePath) : formData.append("file", "");
     
     const data = {
       name: formData.get("name"),
@@ -29,11 +34,18 @@ export default function DocumentUploader({
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
       })
+      return
     }
     
+    const response = await createDocument(data)
+    if (response?.errors) {
+      response.errors.forEach((issue) => {
+        toast.error(issue.message);
+      });
+      return
+    }
 
-    return
-    createDocument()
+
   };
   
 

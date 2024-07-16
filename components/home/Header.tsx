@@ -1,7 +1,13 @@
+"use client";
+import jwt from "jsonwebtoken";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
+
+  const token = localStorage.getItem("token");
+  const data = token ? jwt.decode(token) : null;
+
   return (
     <>
       <header className="bg-blue-900 w-full h-24 gap-4 shadow-lg flex justify-between items-center">
@@ -17,7 +23,9 @@ export default function Header() {
         </div>
         <div className="mr-5 text-3xl text-white font-bold">
           <Link href={"/user"} className="hover:italic hover:underline">
-            Usuario
+            {data && typeof data === "object" && "name" in data
+              ? data.name
+              : "Usuario"}
           </Link>
         </div>
       </header>
