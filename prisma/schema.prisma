@@ -31,8 +31,8 @@ model Proceeding {
   type       String
   status     String     @default("Presentación")
   applicant  String
-  createdexp DateTime
-  lastupdate DateTime?
+  createdexp String
+  lastupdate String?
   userId     String     @db.ObjectId
   lastuser   User       @relation(fields: [userId], references: [id])
   documents  Document[]

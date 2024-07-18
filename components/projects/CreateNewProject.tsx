@@ -1,4 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+"use client"
+import { createProject } from "@/actions/create-project-action";
+import { GlobalContext } from "@/src/context/DataProvaider";
+import { Dispatch, SetStateAction, useContext } from "react";
+import jwt from "jsonwebtoken"
+import { DataUser } from "@/src/types";
 
 type CreateNewProjectProps = {
   showModal: boolean;
@@ -9,6 +14,27 @@ export default function CreateNewProject({
   showModal,
   setShowModal,
 }: CreateNewProjectProps) {
+
+  const { globalData } = useContext(GlobalContext)
+  const user = jwt.decode(globalData.toString()) as DataUser
+
+  const handleActionSubmit = async (formData: FormData) => {
+
+
+    const data = {
+      name: formData.get('name'),
+      nexp: formData.get('nexp'),
+      type: formData.get('type'),
+      date: formData.get('date'),
+      applicant: formData.get('applicant'),
+      user: user.email
+    }
+
+    const response = await createProject(data)
+
+    
+  };
+
   return (
     <>
       {showModal ? (
@@ -32,94 +58,99 @@ export default function CreateNewProject({
                   </button>
                 </div>
                 {/*body*/}
-                <form action="" className="grid grid-cols-3 bg-slate-100">
-                  <div className="relative p-6 flex-auto ">
-                    <label
-                      id="name"
-                      className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
-                    >
-                      Nombre del Proyecto:
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      className="h-7 w-full border border-black rounded-md text-center"
-                    />
+                <form action={handleActionSubmit}>
+                  <div className="grid grid-cols-3 bg-slate-100">
+                    <div className="relative p-6 flex-auto ">
+                      <label
+                        id="name"
+                        className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
+                      >
+                        Nombre del Proyecto:
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        name="name"
+                        className="h-7 w-full border border-black rounded-md text-center"
+                      />
+                    </div>
+                    <div className="relative p-6 flex-auto ">
+                      <label
+                        id="exp"
+                        className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
+                      >
+                        Nº de Expediente:
+                      </label>
+                      <input
+                        id="exp"
+                        type="number"
+                        name="nexp"
+                        className="h-7 w-3/4 border border-black rounded-md text-center"
+                      />
+                    </div>
+                    <div className="relative p-6 flex-auto ">
+                      <label
+                        id="tipo"
+                        className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
+                      >
+                        Tipo de Evaluación:
+                      </label>
+                      <select
+                        name="type"
+                        id="tipo"
+                        className="w-full h-7 text-center rounded-md border border-black"
+                      >
+                        <option value="">-- seleccione Evaluación --</option>
+                        <option value="Ordinaria">Ordinaria</option>
+                        <option value="Simplificada">Simplificada</option>
+                      </select>
+                    </div>
+                    <div className="relative p-6 flex-auto ">
+                      <label
+                        id="date"
+                        className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
+                      >
+                        Fecha de Entrada:
+                      </label>
+                      <input
+                        id="date"
+                        type="date"
+                        name="date"
+                        className="h-7 w-2/3 border border-black rounded-md text-center "
+                      />
+                    </div>
+                    <div className="relative p-6 flex-auto ">
+                      <label
+                        id="name"
+                        className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
+                      >
+                        Solicitante/Interesado:
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        name="applicant"
+                        className="h-7 w-2/3 border border-black rounded-md "
+                      />
+                    </div>
                   </div>
-                  <div className="relative p-6 flex-auto ">
-                    <label
-                      id="exp"
-                      className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
+                  {/*footer*/}
+                  <div className="flex items-center justify-end p-6 border-t border-black border-solid border-blueGray-200 bg-yellow-400 rounded-b">
+                    <button
+                      className="bg-red-500 text-white active:bg-red-600 hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setShowModal(false)}
                     >
-                      Nº de Expediente:
-                    </label>
-                    <input
-                      id="exp"
-                      type="number"
-                      className="h-7 w-3/4 border border-black rounded-md text-center"
-                    />
-                  </div>
-                  <div className="relative p-6 flex-auto ">
-                    <label
-                      id="tipo"
-                      className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
+                      Cerrar
+                    </button>
+                    <button
+                      className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="submit"
                     >
-                      Tipo de Evaluación:
-                    </label>
-                    <select
-                      name="tipo"
-                      id="tipo"
-                      className="w-full h-7 text-center rounded-md border border-black"
-                    >
-                      <option value="">-- seleccione Evaluación --</option>
-                      <option value="Ordinaria">Ordinaria</option>
-                      <option value="Simplificada">Simplificada</option>
-                    </select>
-                  </div>
-                  <div className="relative p-6 flex-auto ">
-                    <label
-                      id="name"
-                      className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
-                    >
-                      Fecha de Entrada:
-                    </label>
-                    <input
-                      id="name"
-                      type="date"
-                      className="h-7 w-2/3 border border-black rounded-md text-center "
-                    />
-                  </div>
-                  <div className="relative p-6 flex-auto ">
-                    <label
-                      id="name"
-                      className="my-4 text-blueGray-500 text-lg leading-relaxed font-bold italic"
-                    >
-                      Solicitante/Interesado:
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      className="h-7 w-2/3 border border-black rounded-md "
-                    />
+                      Guardar
+                    </button>
                   </div>
                 </form>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-black border-solid border-blueGray-200 bg-yellow-400 rounded-b">
-                  <button
-                    className="bg-red-500 text-white active:bg-red-600 hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cerrar
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="submit"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Guardar
-                  </button>
-                </div>
               </div>
             </div>
           </div>

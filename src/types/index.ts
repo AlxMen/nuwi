@@ -13,3 +13,5 @@ export type ProcedItem = Pick<
 > & {
   evaluate: string
 };
+
+export type DataUser = Pick<User, "name"| "email"| "ext" | "role">

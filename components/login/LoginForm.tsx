@@ -5,6 +5,7 @@ import { UserSchema } from "@/src/schema";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
 
+
 export default function LoginForm() {
   const handleActionSubmit = async (formData: FormData) => {
     console.log();
@@ -29,10 +30,8 @@ export default function LoginForm() {
       });
       return;
     }
-
-    localStorage.setItem("token", String(response?.token));
-    
-    if (localStorage.getItem("token")) {
+    if (response?.token) {
+      localStorage.setItem("token", response.token);
       toast.success("Sesión Iniciada Correctamente");
       redirect("/home");
     }

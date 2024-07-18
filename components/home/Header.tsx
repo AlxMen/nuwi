@@ -2,11 +2,19 @@
 import jwt from "jsonwebtoken";
 import Image from "next/image";
 import Link from "next/link";
+import { DataUser } from "@/src/types";
 
 export default function Header() {
 
-  const token = localStorage.getItem("token");
-  const data = token ? jwt.decode(token) : null;
+  let data: DataUser | null = null;
+
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwt.decode(token) as DataUser;
+      data = decoded;
+    }
+  }
 
   return (
     <>
@@ -23,9 +31,7 @@ export default function Header() {
         </div>
         <div className="mr-5 text-3xl text-white font-bold">
           <Link href={"/user"} className="hover:italic hover:underline">
-            {data && typeof data === "object" && "name" in data
-              ? data.name
-              : "Usuario"}
+            {data && data.name}
           </Link>
         </div>
       </header>
