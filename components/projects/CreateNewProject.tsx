@@ -1,9 +1,9 @@
 "use client"
 import { createProject } from "@/actions/create-project-action";
 import { GlobalContext } from "@/src/context/DataProvaider";
+import { ProjectSchema } from "@/src/schema";
 import { Dispatch, SetStateAction, useContext } from "react";
-import jwt from "jsonwebtoken"
-import { DataUser } from "@/src/types";
+import { toast } from "react-toastify";
 
 type CreateNewProjectProps = {
   showModal: boolean;
@@ -14,24 +14,39 @@ export default function CreateNewProject({
   showModal,
   setShowModal,
 }: CreateNewProjectProps) {
-
-  const { globalData } = useContext(GlobalContext)
-  const user = jwt.decode(globalData.toString()) as DataUser
-
+  
+  const {dataGlobal} = useContext(GlobalContext)
   const handleActionSubmit = async (formData: FormData) => {
 
 
     const data = {
       name: formData.get('name'),
-      nexp: formData.get('nexp'),
+      nexp: Number(formData.get('nexp')),
       type: formData.get('type'),
       date: formData.get('date'),
       applicant: formData.get('applicant'),
-      user: user.email
     }
 
-    const response = await createProject(data)
+    const result = ProjectSchema.safeParse(data)
 
+    if (!result.success) { 
+      result.error.issues.forEach((issue) => {
+        toast.error(issue.message);
+      });
+      return;
+    }
+    
+
+    const response = await createProject(data, dataGlobal.email)
+
+    if (response?.errors) {
+      response.errors.forEach((issue) => {
+        toast.error(issue.message);
+      });
+      return;
+    }
+
+    
     
   };
 

@@ -1,21 +1,12 @@
 "use client";
-import jwt from "jsonwebtoken";
+import { GlobalContext } from "@/src/context/DataProvaider";
 import Image from "next/image";
 import Link from "next/link";
-import { DataUser } from "@/src/types";
+import { useContext } from "react";
 
 export default function Header() {
-
-  let data: DataUser | null = null;
-
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = jwt.decode(token) as DataUser;
-      data = decoded;
-    }
-  }
-
+  const { dataGlobal } = useContext(GlobalContext);
+  
   return (
     <>
       <header className="bg-blue-900 w-full h-24 gap-4 shadow-lg flex justify-between items-center">
@@ -31,7 +22,7 @@ export default function Header() {
         </div>
         <div className="mr-5 text-3xl text-white font-bold">
           <Link href={"/user"} className="hover:italic hover:underline">
-            {data && data.name}
+            {dataGlobal.name}
           </Link>
         </div>
       </header>
