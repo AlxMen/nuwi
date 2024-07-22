@@ -32,7 +32,7 @@ model Proceeding {
   status     String     @default("Presentación")
   applicant  String
   createdexp String
-  lastupdate String?
+  lastupdate String
   userId     String     @db.ObjectId
   lastuser   User       @relation(fields: [userId], references: [id])
   documents  Document[]

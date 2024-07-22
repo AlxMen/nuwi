@@ -2,7 +2,6 @@ import { User, Category, Proceeding, Document, Ministerio, Cabildo, Gobierno, Ay
 
 export type ProcedItem = Pick<
   Proceeding,
-  | "id"
   | "createdexp"
   | "status"
   | "name"
@@ -10,8 +9,6 @@ export type ProcedItem = Pick<
   | "nExp"
   | "applicant"
   | "userId"
-> & {
-  evaluate: string
-};
+>;
 
 export type DataUser = Pick<User, "name"| "email"| "ext" | "role">
