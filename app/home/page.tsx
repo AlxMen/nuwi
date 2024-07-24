@@ -1,24 +1,18 @@
-
-import { prisma } from "@/src/lib/prisma";
 import Categories from "@/components/ui/Categories";
 import Body from "@/components/home/Body";
-
-async function getCategories() {
-  return await prisma.category.findMany();
-}
+import { getCategory } from "@/src/store";
 
 export default async function HomePage() {
-  
-  const categories = await getCategories();
+  const categories = await getCategory();
 
   return (
     <>
       <aside className="ml-3 mt-9 rounded-md h-4/5 w-52 bg-slate-100 flex flex-col justify-between border-2 border-blue-500 ">
-        <nav>
+        <div>
           {categories.map((category) => (
             <Categories key={category.index} category={category} />
           ))}
-        </nav>
+          </div>
         <div>&#169;copyright</div>
       </aside>
       <Body />

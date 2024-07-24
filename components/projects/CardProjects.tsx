@@ -1,13 +1,8 @@
 import Link from "next/link";
 import MenuCard from "../ui/MenuCard";
-import { Dispatch, SetStateAction } from "react";
-
-type CardProjectProps = {
-  setModal: Dispatch<SetStateAction<boolean>>;
-}; 
 
 
-export default function CardProjects({setModal}: CardProjectProps) {
+export default function CardProjects() {
   return (
     <section className="h-fit w-full bg-white rounded-xl shadow-lg border border-blue-300">
       <div className="lg:order-first">
@@ -19,7 +14,7 @@ export default function CardProjects({setModal}: CardProjectProps) {
                 Nombre del Proyecto
               </p>
             </div>
-            <MenuCard setModal={setModal} />
+            <MenuCard />
           </div>
           <div className="grid grid-cols-3 p-1">
             <p className="m-2  text-sm font-semibold text-neutral-800">

@@ -10,11 +10,12 @@ export default function Header() {
   return (
     <>
       <header className="bg-blue-900 w-full h-24 gap-4 shadow-lg flex justify-between items-center">
-        <div className="relative h-32 w-52">
+        <div className="relative h-32 w-52 ml-2 mb-2">
           <Link href={"/home"}>
             <Image
-              fill
-              style={{ objectFit: "contain" }}
+              width={130}
+              height={100}
+              style={{ objectFit: "contain"}}
               src={"/NuWi1.png"}
               alt="logo del programa"
             />

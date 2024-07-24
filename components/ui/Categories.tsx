@@ -15,7 +15,8 @@ export default function Categories({ category }: CategoriesProps) {
     >
       <div className="h-12 w-12 relative">
         <Image
-          fill
+          width={100}
+          height={100}
           src={`/${category.index}.png`}
           alt="Icono de la categoria"
         />

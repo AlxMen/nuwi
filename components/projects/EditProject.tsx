@@ -2,14 +2,14 @@ import { Dispatch, SetStateAction } from "react";
 
 
 type EditProjectProps = {
-  showModal: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  modalEdit: boolean;
+  setModalEdit: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function EditProject({ showModal, setShowModal }: EditProjectProps) {
+export default function EditProject({ modalEdit, setModalEdit }: EditProjectProps) {
   return (
     <>
-      {showModal ? (
+      {modalEdit ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -22,7 +22,7 @@ export default function EditProject({ showModal, setShowModal }: EditProjectProp
                   </h3>
                   <button
                     className="p-1 ml-auto border-0 text-black float-right text-3xl"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => setModalEdit(false)}
                   >
                     <span className="text-white  font-bold h-6 w-6 text-2xl block">
                       X
@@ -51,7 +51,11 @@ export default function EditProject({ showModal, setShowModal }: EditProjectProp
                     >
                       Estado:
                     </label>
-                    <select name="status" id="status" className="w-full border border-black rounded-md h-7 text-center">
+                    <select
+                      name="status"
+                      id="status"
+                      className="w-full border border-black rounded-md h-7 text-center"
+                    >
                       <option value="">-- estado Actual --</option>
                       <option value="">Presentación</option>
                       <option value="">Subsanación</option>
@@ -68,14 +72,14 @@ export default function EditProject({ showModal, setShowModal }: EditProjectProp
                   <button
                     className="bg-red-500 text-white active:bg-red-600 hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => setModalEdit(false)}
                   >
                     Cancelar
                   </button>
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => setModalEdit(false)}
                   >
                     Guardar Cambios
                   </button>

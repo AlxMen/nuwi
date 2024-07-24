@@ -1,20 +1,13 @@
 "use client"
 import { createProject } from "@/actions/create-project-action";
+import { FaPlus } from "react-icons/fa";
 import { GlobalContext } from "@/src/context/DataProvaider";
 import { ProjectSchema } from "@/src/schema";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
-type CreateNewProjectProps = {
-  showModal: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function CreateNewProject({
-  showModal,
-  setShowModal,
-}: CreateNewProjectProps) {
-  
+export default function CreateNewProject() {
+  const [showModal, setShowModal] = useState(false);
   const {dataGlobal} = useContext(GlobalContext)
   const handleActionSubmit = async (formData: FormData) => {
 
@@ -52,6 +45,14 @@ export default function CreateNewProject({
 
   return (
     <>
+      <button
+        className="h-15 w-30 p-2 border content-center text-white bg-green-500  rounded-xl hover:bg-green-600"
+        onClick={() => setShowModal(true)}
+      >
+        <p className="text-center text-xl font-bold flex items-center justify-center gap-2">
+          <FaPlus /> Nuevo
+        </p>
+      </button>
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

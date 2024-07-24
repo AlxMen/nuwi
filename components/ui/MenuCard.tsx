@@ -1,3 +1,4 @@
+"use client"
 import {
   Menu,
   MenuButton,
@@ -5,18 +6,16 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { BsList } from "react-icons/bs";
 import DeleteConfirm from "./DeleteConfirm";
 import Link from "next/link";
+import EditProject from "../projects/EditProject";
 
-type MenuCardProps = {
-  setModal: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function MenuCard({ setModal }: MenuCardProps) {
+export default function MenuCard() {
 
   const [open, setOpen] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false);
 
   return (
     <>
@@ -39,20 +38,24 @@ export default function MenuCard({ setModal }: MenuCardProps) {
             <MenuItem>
               <Link
                 href={"/home/projects/1"}
-                className="group bg-blue-700 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-blue-800">
+                className="group bg-blue-700 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-blue-800"
+              >
                 Abrir
               </Link>
             </MenuItem>
             <MenuItem>
               <button
                 className="group bg-green-600 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-green-700"
-                onClick={() => setModal(true)}
+                onClick={() => setOpenEdit(true)}
               >
                 Editar
               </button>
             </MenuItem>
             <MenuItem>
-              <button className="group bg-red-600 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-red-700" onClick={() => setOpen(true)}>
+              <button
+                className="group bg-red-600 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-red-700"
+                onClick={() => setOpen(true)}
+              >
                 Eliminar
               </button>
             </MenuItem>
@@ -60,6 +63,7 @@ export default function MenuCard({ setModal }: MenuCardProps) {
         </Transition>
       </Menu>
       <DeleteConfirm open={open} setOpen={setOpen} />
+      <EditProject modalEdit={openEdit} setModalEdit={setOpenEdit} />
     </>
   );
 }
