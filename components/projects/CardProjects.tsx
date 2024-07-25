@@ -1,48 +1,72 @@
 import Link from "next/link";
 import MenuCard from "../ui/MenuCard";
+import { projects } from "@/src/types";
 
+const statusStyles = [
+  { name: "Presentación", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+  { name: "Subsanación", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+  { name: "Inicio", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+  { name: "En Proceso", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+  { name: "Paralizado", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+  { name: "Cancelado", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+  { name: "Finalizado", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+];
+export default function CardProjects({ info }: { info: projects }) {
+  const {
+    nExp,
+    name,
+    status,
+    type,
+    applicant,
+    createdexp,
+    lastupdate,
+    lastuser,
+  } = info;
 
-export default function CardProjects() {
   return (
     <section className="h-fit w-full bg-white rounded-xl shadow-lg border border-blue-300">
       <div className="lg:order-first">
         <div className="flex flex-col">
           <div className="flex border-b border-black bg-blue-800 rounded-t-md p-2 justify-between items-center">
             <div>
-              <p className="text-white font-black italic">Nº Expediente</p>
-              <p className="text-white font-bold text-3xl">
-                Nombre del Proyecto
-              </p>
+              <p className="text-white font-black italic">Nº {nExp}</p>
+              <p className="text-white font-bold text-3xl">{name} {type}</p>
             </div>
             <MenuCard />
           </div>
-          <div className="grid grid-cols-3 p-1">
-            <p className="m-2  text-sm font-semibold text-neutral-800">
-              Fecha de Entrada:{" "}
-              <span className="font-bold italic">{"dd/mm/aaaa"}</span>
-            </p>
-            <p className="m-2  text-sm font-semibold text-neutral-800">
-              Ultima Actualización:{" "}
-              <span className="font-bold italic">{"dd/mm/aaaa"}</span>
-            </p>
-            <p className="m-2  text-sm font-semibold text-neutral-800">
-              modificado por:{" "}
-              <span className="font-bold italic">{"Nombre de Usuario"}</span>
-            </p>
-            <p className="m-2  text-sm font-semibold text-neutral-800">
-              Estado:{" "}
-              <span className="font-bold italic">
-                {
-                  "Presentación/Subsanación/Inicio/En Proceso/Paralizado/Cancelado/Finalizado"
-                }
-              </span>
-            </p>
-            <p className="m-2  text-sm font-semibold text-neutral-800">
-              Solicitante/Interesado:{" "}
-              <span className="font-bold italic">
-                {"Nombre del Solicitante o Interesado"}
-              </span>
-            </p>
+          <div className=" p-1">
+            <div className="text-sm items-center grid grid-cols-3">
+              <h1 className="m-2 font-semibold text-neutral-800">
+                Fecha de Entrada:{" "}
+              </h1>
+              <p className="font-bold italic">{createdexp}</p>
+            </div>
+            <div className="text-sm items-center grid grid-cols-3">
+              <h1 className="m-2 font-semibold text-neutral-800">
+                Ultima Actualización:{" "}
+              </h1>
+              <p className="font-bold italic">{lastupdate}</p>
+            </div>
+            <div className="text-sm items-center grid grid-cols-3">
+              <h1 className="m-2 font-semibold text-neutral-800">
+                modificado por:{" "}
+              </h1>
+              <p className="font-bold italic">{lastuser.name}</p>
+            </div>
+            <div className="text-sm items-center grid grid-cols-3">
+              <h1 className="m-2 font-semibold text-neutral-800">Estado: </h1>
+              <p className={`font-bold italic  ${statusStyles.map(st => {
+                return st.name === status? st.style : "";
+              })}`}>
+                {status}
+              </p>
+            </div>
+            <div className="text-sm items-center grid grid-cols-3">
+              <h1 className="m-2 font-semibold text-neutral-800">
+                Solicitante/Interesado:{" "}
+              </h1>
+              <p className="font-bold italic">{applicant}</p>
+            </div>
           </div>
           <div className="flex justify-end border-t border-black bg-yellow-400 rounded-b-xl p-2">
             <Link

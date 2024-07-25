@@ -6,31 +6,29 @@ import { ProjectSchema } from "@/src/schema";
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
-export default function CreateNewProject() {
+export default function CreateNewProject({ category }: { category: string }) {
   const [showModal, setShowModal] = useState(false);
-  const {dataGlobal} = useContext(GlobalContext)
+  const { dataGlobal } = useContext(GlobalContext);
   const handleActionSubmit = async (formData: FormData) => {
-
-
     const data = {
-      name: formData.get('name'),
-      nexp: Number(formData.get('nexp')),
-      type: formData.get('type'),
-      date: formData.get('date'),
-      applicant: formData.get('applicant'),
-    }
+      name: formData.get("name"),
+      category: category,
+      nexp: Number(formData.get("nexp")),
+      type: formData.get("type"),
+      date: formData.get("date"),
+      applicant: formData.get("applicant"),
+    };
 
-    const result = ProjectSchema.safeParse(data)
+    const result = ProjectSchema.safeParse(data);
 
-    if (!result.success) { 
+    if (!result.success) {
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
       });
       return;
     }
-    
 
-    const response = await createProject(data, dataGlobal.email)
+    const response = await createProject(data, dataGlobal.email);
 
     if (response?.errors) {
       response.errors.forEach((issue) => {
@@ -39,8 +37,8 @@ export default function CreateNewProject() {
       return;
     }
 
-    
-    
+    toast.success(response?.message)
+    setShowModal(false)
   };
 
   return (

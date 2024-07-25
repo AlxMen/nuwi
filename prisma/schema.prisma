@@ -28,6 +28,7 @@ model Proceeding {
   id         String     @id @default(auto()) @map("_id") @db.ObjectId
   nExp       Int
   name       String
+  category   String
   type       String
   status     String     @default("Presentación")
   applicant  String

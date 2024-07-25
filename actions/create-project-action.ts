@@ -30,6 +30,7 @@ export async function createProject(data: unknown, email: string) {
     data: {
       nExp: result.data.nexp,
       name: result.data.name,
+      category: result.data.category,
       type: result.data.type,
       createdexp: result.data.date,
       lastupdate: dateupdate,
