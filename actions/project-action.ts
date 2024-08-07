@@ -4,6 +4,48 @@ import { prisma } from "@/src/lib/prisma";
 import { ProjectSchema } from "@/src/schema";
 import { currentDate } from "@/src/utils/currentDate";
 
+export async function getCategory() {
+  return await prisma.category.findMany();
+}
+
+export async function getProjectByCategoryAndQuery(
+  category: string,
+  query: string
+) {
+  const result = Number(query);
+
+  if (result > 0) {
+    return await prisma.proceeding.findMany({
+      take: 10,
+      include: {
+        lastuser: true,
+      },
+      where: {
+        category: {
+          equals: category,
+        },
+        nExp: {
+          contains: query.toString(),
+        },
+      },
+    });
+  }
+
+  return await prisma.proceeding.findMany({
+    take: 10,
+    include: {
+      lastuser: true,
+    },
+    where: {
+      category: {
+        equals: category,
+      },
+      name: {
+        contains: query,
+      },
+    },
+  });
+}
 
 export async function createProject(data: unknown, email: string) {
   

@@ -1,5 +1,5 @@
 "use client"
-import { createProject } from "@/actions/create-project-action";
+import { createProject } from "@/actions/project-action";
 import { FaPlus } from "react-icons/fa";
 import { GlobalContext } from "@/src/context/DataProvaider";
 import { ProjectSchema } from "@/src/schema";

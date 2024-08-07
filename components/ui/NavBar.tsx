@@ -1,5 +1,5 @@
 
-import { getCategory } from "@/src/store";
+import { getCategory } from "@/actions/project-action";
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 

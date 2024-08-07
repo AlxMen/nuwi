@@ -1,12 +1,12 @@
 "use client";
 
-import { loginUser } from "@/actions/login-user-action";
 import { UserSchema } from "@/src/schema";
 import { redirect } from "next/navigation";
+import { loginUser } from "@/actions/login-user-action";
 import { toast } from "react-toastify";
 
-
 export default function LoginForm() {
+
   const handleActionSubmit = async (formData: FormData) => {
     console.log();
     const data = {
@@ -31,8 +31,8 @@ export default function LoginForm() {
       return;
     }
     if (response?.token) {
-      localStorage.setItem("token", response.token);
       toast.success("Sesión Iniciada Correctamente");
+      localStorage.setItem("token", response.token);
       redirect("/home");
     }
   };

@@ -1,10 +1,8 @@
-import CardProjects from "@/components/projects/CardProjects";
 import CreateNewProject from "@/components/projects/CreateNewProject";
 import SearchBar from "@/components/projects/SearchBar";
 import TableProcceding from "@/components/projects/TableProcceding";
 import NavBar from "@/components/ui/NavBar";
-import { getProjectByCategory } from "@/src/store";
-import { projects } from "@/src/types";
+import { CardsSkeleton } from "@/components/ui/Skeleton";
 import { Suspense } from "react";
 
 export default async function ProjectPage({
@@ -17,10 +15,8 @@ export default async function ProjectPage({
     page?: string;
   };
 }) {
-  const query = Number(searchParams?.page) || 1;
-  const currentPage = searchParams?.search || "";
-
-  
+  const query = searchParams?.search || "";
+  const currentPage = Number(searchParams?.page) || 1;
 
   return (
     <>
@@ -30,7 +26,14 @@ export default async function ProjectPage({
           <SearchBar />
           <CreateNewProject category={params.category} />
         </div>
-        <TableProcceding category={params.category} />
+        <Suspense key={query + currentPage} fallback={<CardsSkeleton />}>
+          <TableProcceding
+            category={params.category}
+            query={query}
+            currentPage={currentPage}
+          />
+          
+        </Suspense>
       </div>
     </>
   );

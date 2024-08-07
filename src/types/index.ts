@@ -23,7 +23,7 @@ export type projects = {
     email: string;
   };
   id: string;
-  nExp: number;
+  nExp: string;
   name: string;
   category: string;
   type: string;

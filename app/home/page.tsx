@@ -12,7 +12,7 @@ export default async function HomePage() {
           {categories.map((category) => (
             <Categories key={category.index} category={category} />
           ))}
-          </div>
+        </div>
         <div>&#169;copyright</div>
       </aside>
       <Body />

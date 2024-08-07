@@ -1,11 +1,12 @@
 "use client";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import {useDebouncedCallback} from "use-debounce"
 export default function SearchBar() {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const {replace} = useRouter()
   
-  const handleSearch = (search: string) => {
+  const handleSearch = useDebouncedCallback((search: string) => {
     const params = new URLSearchParams(searchParams)
     if (search) {
       params.set("search", search);
@@ -13,7 +14,7 @@ export default function SearchBar() {
       params.delete("search");
     }
     replace(`${pathname}?${params.toString()}`)
-  };
+  }, 2300);
 
   return (
     <>
