@@ -1,6 +1,6 @@
 import Categories from "@/components/ui/Categories";
 import Body from "@/components/home/Body";
-import { getCategory } from "@/src/store";
+import { getCategory } from "@/actions/project-action";
 
 export default async function HomePage() {
   const categories = await getCategory();

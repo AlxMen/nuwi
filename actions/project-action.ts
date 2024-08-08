@@ -8,31 +8,20 @@ export async function getCategory() {
   return await prisma.category.findMany();
 }
 
+export async function getProjectCount(query: string) {
+  return await prisma.proceeding.count();
+}
 export async function getProjectByCategoryAndQuery(
   category: string,
-  query: string
+  query: string,
+  currentPage: number,
 ) {
-  const result = Number(query);
-
-  if (result > 0) {
-    return await prisma.proceeding.findMany({
-      take: 10,
-      include: {
-        lastuser: true,
-      },
-      where: {
-        category: {
-          equals: category,
-        },
-        nExp: {
-          contains: query.toString(),
-        },
-      },
-    });
-  }
+  const pageSize = 10
+  const skip = (currentPage - 1) * pageSize;
 
   return await prisma.proceeding.findMany({
-    take: 10,
+    take: pageSize,
+    skip,
     include: {
       lastuser: true,
     },
@@ -40,9 +29,10 @@ export async function getProjectByCategoryAndQuery(
       category: {
         equals: category,
       },
-      name: {
-        contains: query,
-      },
+      OR: [
+        { nExp: { contains: query } },
+        { name: { contains: query } },
+      ],
     },
   });
 }
@@ -82,6 +72,7 @@ export async function createProject(data: unknown, email: string) {
   })
 
   if (response) {
+    
     return {
       message: "Proyecto creado exitosamente",
     }

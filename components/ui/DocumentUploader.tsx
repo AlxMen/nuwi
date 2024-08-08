@@ -1,4 +1,4 @@
-import { createDocument } from "@/actions/create-document-action";
+import { createDocument } from "@/actions/document-action";
 import { DocumentSchema } from "@/src/schema";
 import { currentDate } from "@/src/utils/currentDate";
 import { Dispatch, SetStateAction, useState } from "react";

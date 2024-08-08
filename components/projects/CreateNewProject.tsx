@@ -5,15 +5,18 @@ import { GlobalContext } from "@/src/context/DataProvaider";
 import { ProjectSchema } from "@/src/schema";
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { revalidatePath } from "next/cache";
+import { usePathname } from "next/navigation";
 
 export default function CreateNewProject({ category }: { category: string }) {
+  const pathname = usePathname()
   const [showModal, setShowModal] = useState(false);
   const { dataGlobal } = useContext(GlobalContext);
   const handleActionSubmit = async (formData: FormData) => {
     const data = {
       name: formData.get("name"),
       category: category,
-      nexp: Number(formData.get("nexp")),
+      nexp: formData.get("nexp"),
       type: formData.get("type"),
       date: formData.get("date"),
       applicant: formData.get("applicant"),
@@ -39,6 +42,7 @@ export default function CreateNewProject({ category }: { category: string }) {
 
     toast.success(response?.message)
     setShowModal(false)
+    revalidatePath(`${pathname}`)
   };
 
   return (
@@ -97,7 +101,7 @@ export default function CreateNewProject({ category }: { category: string }) {
                       </label>
                       <input
                         id="exp"
-                        type="number"
+                        type="text"
                         name="nexp"
                         className="h-7 w-3/4 border border-black rounded-md text-center"
                       />
@@ -144,7 +148,7 @@ export default function CreateNewProject({ category }: { category: string }) {
                         id="name"
                         type="text"
                         name="applicant"
-                        className="h-7 w-2/3 border border-black rounded-md "
+                        className="h-7 w-full border border-black rounded-md text-center "
                       />
                     </div>
                   </div>

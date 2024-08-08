@@ -17,6 +17,7 @@ export default async function ProjectPage({
 }) {
   const query = searchParams?.search || "";
   const currentPage = Number(searchParams?.page) || 1;
+  
 
   return (
     <>
@@ -34,6 +35,7 @@ export default async function ProjectPage({
           />
           
         </Suspense>
+        
       </div>
     </>
   );
