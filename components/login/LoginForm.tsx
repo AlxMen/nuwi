@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 export default function LoginForm() {
 
   const handleActionSubmit = async (formData: FormData) => {
-    console.log();
     const data = {
       email: formData.get("email"),
       password: formData.get("password"),

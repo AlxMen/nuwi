@@ -12,8 +12,6 @@ export default function PaginationPages({
 }) {
   const pathname = usePathname();
 
-  const pages = Array.from({ length: total }, (_, i) => i + 1);
-
   return (
     <nav className="flex justify-center py-2 bg-slate-100 border-t-2 border-black">
       <Pagination

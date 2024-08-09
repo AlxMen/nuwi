@@ -79,3 +79,8 @@ export async function createProject(data: unknown, email: string) {
   }
   
 }
+
+export async function updateProject(data: unknown) { 
+  console.log(data);
+  
+}

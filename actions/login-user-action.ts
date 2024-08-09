@@ -18,7 +18,6 @@ export async function loginUser(data: unknown) {
         password: result.data.password,
       },
     });
-
     if (!user) {
       return { errors: [{ message: "Usuario o contraseña incorrectos" }] };
     } else {

@@ -11,12 +11,13 @@ import { BsList } from "react-icons/bs";
 import DeleteConfirm from "./DeleteConfirm";
 import Link from "next/link";
 import EditProject from "../projects/EditProject";
+import { projects } from "@/src/types";
 
-export default function MenuCard() {
+export default function MenuCard({ info }: {info: projects}) {
 
   const [open, setOpen] = useState(false)
   const [openEdit, setOpenEdit] = useState(false);
-
+  
   return (
     <>
       <Menu>
@@ -63,7 +64,7 @@ export default function MenuCard() {
         </Transition>
       </Menu>
       <DeleteConfirm open={open} setOpen={setOpen} />
-      <EditProject modalEdit={openEdit} setModalEdit={setOpenEdit} />
+      <EditProject modalEdit={openEdit} setModalEdit={setOpenEdit} id={info.id} name={info.name} status={info.status} />
     </>
   );
 }

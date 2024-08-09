@@ -23,6 +23,7 @@ export default function CardProjects({ info }: { info: projects }) {
     lastuser,
   } = info;
 
+
   return (
     <section className="h-fit w-full bg-white rounded-xl shadow-lg border border-blue-300">
       <div className="lg:order-first">
@@ -32,7 +33,7 @@ export default function CardProjects({ info }: { info: projects }) {
               <p className="text-white font-black italic">Nº {nExp}</p>
               <p className="text-white font-bold text-3xl">{name} {type}</p>
             </div>
-            <MenuCard />
+            <MenuCard info={info} />
           </div>
           <div className=" p-1">
             <div className="text-sm items-center grid grid-cols-3">
