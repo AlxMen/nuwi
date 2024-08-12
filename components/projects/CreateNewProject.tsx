@@ -1,17 +1,17 @@
 "use client"
 import { createProject } from "@/actions/project-action";
 import { FaPlus } from "react-icons/fa";
-import { GlobalContext } from "@/src/context/DataProvaider";
+import { useMyContext } from "@/src/context/DataProvaider";
 import { ProjectSchema } from "@/src/schema";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { revalidatePath } from "next/cache";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 export default function CreateNewProject({ category }: { category: string }) {
   const pathname = usePathname()
   const [showModal, setShowModal] = useState(false);
-  const { dataGlobal } = useContext(GlobalContext);
+  const { dataGlobal } = useMyContext();
   const handleActionSubmit = async (formData: FormData) => {
     const data = {
       name: formData.get("name"),
@@ -42,7 +42,7 @@ export default function CreateNewProject({ category }: { category: string }) {
 
     toast.success(response?.message)
     setShowModal(false)
-    revalidatePath(`${pathname}`)
+    redirect(`${pathname}`)
   };
 
   return (

@@ -1,11 +1,10 @@
 "use client";
-import { GlobalContext } from "@/src/context/DataProvaider";
+import { useMyContext } from "@/src/context/DataProvaider";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
 
 export default function Header() {
-  const { dataGlobal } = useContext(GlobalContext);
+  const { dataGlobal } = useMyContext();
   
   return (
     <>

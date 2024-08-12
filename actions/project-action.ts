@@ -1,22 +1,47 @@
-"use server"
+"use server";
 
 import { prisma } from "@/src/lib/prisma";
-import { ProjectSchema } from "@/src/schema";
+import { EditProjectSchema, ProjectSchema } from "@/src/schema";
 import { currentDate } from "@/src/utils/currentDate";
+import { redirect } from "next/navigation";
 
 export async function getCategory() {
   return await prisma.category.findMany();
 }
 
-export async function getProjectCount(query: string) {
-  return await prisma.proceeding.count();
+export async function getProjectCount(query: string, category: string){
+  return await prisma.proceeding.count({
+    where: {
+      category,
+      OR: [
+        {
+          nExp: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          name: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          type: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
+  });
 }
 export async function getProjectByCategoryAndQuery(
   category: string,
   query: string,
-  currentPage: number,
+  currentPage: number
 ) {
-  const pageSize = 10
+  const pageSize = 10;
   const skip = (currentPage - 1) * pageSize;
 
   return await prisma.proceeding.findMany({
@@ -30,33 +55,47 @@ export async function getProjectByCategoryAndQuery(
         equals: category,
       },
       OR: [
-        { nExp: { contains: query } },
-        { name: { contains: query } },
+        {
+          nExp: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          name: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          type: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
       ],
     },
   });
 }
 
 export async function createProject(data: unknown, email: string) {
-  
-  const result = ProjectSchema.safeParse(data)
+  const result = ProjectSchema.safeParse(data);
   if (!result.success) {
     return {
       errors: result.error.issues,
-    }
+    };
   }
 
   const dataUser = await prisma.user.findUnique({
     where: { email: email },
   });
   if (!dataUser) {
-    return { errors: [{ message: "El usuario no existe" }] }
+    return { errors: [{ message: "El usuario no existe" }] };
   }
 
-  const dateupdate = currentDate()
+  const dateupdate = currentDate();
 
   console.log(dateupdate);
-  
 
   const response = await prisma.proceeding.create({
     data: {
@@ -68,19 +107,39 @@ export async function createProject(data: unknown, email: string) {
       lastupdate: dateupdate,
       applicant: result.data.applicant,
       userId: dataUser.id,
-    }
-  })
+    },
+  });
 
   if (response) {
-    
     return {
       message: "Proyecto creado exitosamente",
-    }
+    };
   }
-  
 }
 
-export async function updateProject(data: unknown) { 
-  console.log(data);
-  
+export async function updateProject(data: unknown) {
+  const result = EditProjectSchema.safeParse(data);
+
+  if (!result.success) {
+    return {
+      errors: result.error.issues,
+    };
+  }
+
+  const response = await prisma.proceeding.update({
+    where: { id: result.data.id },
+    data: {
+      name: result.data.name,
+      status: result.data.status,
+      lastupdate: currentDate(),
+    },
+  })
+  if (!response) {
+    return {
+      errors: [{ message: "No se pudo actualizar el proyecto" }],
+    }
+  }
+  else {
+    redirect(`/home/${response.category}`)
+  }
 }

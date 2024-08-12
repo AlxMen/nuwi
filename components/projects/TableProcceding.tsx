@@ -23,12 +23,12 @@ export default async function TableProcceding({
     query,
     currentPage
   );
-  const totalProject = getProjectCount(query);
+  const totalProject = getProjectCount(query, category);
   const [dataProcced, total] = await Promise.all([proccedings, totalProject]);
   const pages = Math.ceil(total / 10);
 
   if (currentPage > pages) redirect("/home/projects");
-
+  
   return (
     <>
       <div className="xl:grid xl:grid-cols-2 h-full w-full bg-slate-100 p-4 xl:gap-6 overflow-y-auto">

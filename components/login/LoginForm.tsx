@@ -4,8 +4,11 @@ import { UserSchema } from "@/src/schema";
 import { redirect } from "next/navigation";
 import { loginUser } from "@/actions/login-user-action";
 import { toast } from "react-toastify";
+import { useMyContext } from "@/src/context/DataProvaider";
 
 export default function LoginForm() {
+
+  const { triggerEffect } = useMyContext()
 
   const handleActionSubmit = async (formData: FormData) => {
     const data = {
@@ -73,6 +76,7 @@ export default function LoginForm() {
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer rounded-xl"
+            onClick={triggerEffect}
           >
             Iniciar Sesion
           </button>

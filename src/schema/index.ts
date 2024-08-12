@@ -18,6 +18,12 @@ export const ProjectSchema = z.object({
   applicant: z.string().min(1, "El solicitante es obligatorio "),
 });
 
+export const EditProjectSchema = z.object({
+  id: z.string().min(1, "El project e obligatorio"),
+  name: z.string().min(1, "El nombre es obligatorio"),
+  status: z.string().min(1, "El estado es obligatorio"),
+})
+
 export const DocumentSchema = z.object({
   name: z.string().min(1, "El nombre del documento es requerido"),
   date: z.string().min(1, "La fecha del documento es requerida"),

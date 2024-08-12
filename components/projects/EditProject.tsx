@@ -1,12 +1,15 @@
 import { updateProject } from "@/actions/project-action";
+import { EditProjectSchema } from "@/src/schema";
+import { redirect } from "next/dist/server/api-utils";
 import { Dispatch, SetStateAction } from "react";
+import { toast } from "react-toastify";
 
 type EditProjectProps = {
   modalEdit: boolean;
   setModalEdit: Dispatch<SetStateAction<boolean>>;
   name: string;
-  status: string
-  id: string
+  status: string;
+  id: string;
 };
 
 export default function EditProject({
@@ -14,16 +17,30 @@ export default function EditProject({
   setModalEdit,
   name,
   status,
-  id
+  id,
 }: EditProjectProps) {
-
   const handleActionSubmit = async (formData: FormData) => {
     const data = {
       id: id,
       name: formData.get("name"),
       status: formData.get("status"),
     };
-    await updateProject(data)
+
+    const result = EditProjectSchema.safeParse(data);
+
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        toast.error(issue.message);
+      });
+      return;
+    }
+    const response = await updateProject(data);
+    if (response?.errors) {
+      toast.error(response.errors[0].message);
+      return;
+    }
+    setModalEdit(false);
+    toast.success("Proyecto actualizado exitosamente");
   };
 
   return (

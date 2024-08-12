@@ -3,13 +3,13 @@ import MenuCard from "../ui/MenuCard";
 import { projects } from "@/src/types";
 
 const statusStyles = [
-  { name: "Presentación", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
-  { name: "Subsanación", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
-  { name: "Inicio", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
-  { name: "En Proceso", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
-  { name: "Paralizado", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
-  { name: "Cancelado", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
-  { name: "Finalizado", style: "bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+  { name: "Presentación", style: " bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
+  { name: "Subsanación", style: " bg-violet-300 border-2 border-violet-500 w-fit p-1 " },
+  { name: "Inicio", style: " bg-teal-200 border-2 border-teal-500 w-fit p-1 " },
+  { name: "En Proceso", style: " bg-lime-200 border-2 border-lime-500 w-fit p-1 " },
+  { name: "Paralizado", style: " bg-yellow-200 border-2 border-yellow-500 w-fit p-1 " },
+  { name: "Cancelado", style: " bg-red-200 border-2 border-red-500 w-fit p-1 " },
+  { name: "Finalizado", style: " bg-amber-300 border-2 border-amber-600 w-fit p-1 " },
 ];
 export default function CardProjects({ info }: { info: projects }) {
   const {
@@ -56,7 +56,7 @@ export default function CardProjects({ info }: { info: projects }) {
             </div>
             <div className="text-sm items-center grid grid-cols-3">
               <h1 className="m-2 font-semibold text-neutral-800">Estado: </h1>
-              <p className={`font-bold italic  ${statusStyles.map(st => {
+              <p className={`font-bold italic rounded-lg  ${statusStyles.map(st => {
                 return st.name === status? st.style : "";
               })}`}>
                 {status}

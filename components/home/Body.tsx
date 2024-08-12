@@ -1,11 +1,10 @@
 "use client";
 
-import { GlobalContext } from "@/src/context/DataProvaider";
+import { useMyContext } from "@/src/context/DataProvaider";
 import Image from "next/image";
-import { useContext } from "react";
 
 export default function Body() {
-  const { dataGlobal } = useContext(GlobalContext)
+  const { dataGlobal } = useMyContext()
   
   return (
     <div className="ml-2 mt-9 h-4/5 xl:w-full xl:mr-3 w-3/4 text-white flex flex-col justify-center items-center">
