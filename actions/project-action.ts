@@ -143,3 +143,8 @@ export async function updateProject(data: unknown) {
     redirect(`/home/${response.category}`)
   }
 }
+
+export async function deleteProject(id: string) {
+  console.log(id);
+  
+}

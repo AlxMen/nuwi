@@ -1,3 +1,4 @@
+import { deleteProject } from '@/actions/project-action';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import React, { Dispatch, SetStateAction } from 'react'
 import { BsExclamationOctagonFill } from 'react-icons/bs';
@@ -5,10 +6,16 @@ import { BsExclamationOctagonFill } from 'react-icons/bs';
 type DeleteConfrimProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  id: string;
 };
 
-export default function DeleteConfirm({open, setOpen}: DeleteConfrimProps) {
+export default function DeleteConfirm({open, setOpen, id}: DeleteConfrimProps) {
 
+  const handleDeletedProject = async () => {
+    
+    const response = await deleteProject(id)
+    
+  }
 
   return (
     <Transition show={open}>
@@ -62,7 +69,7 @@ export default function DeleteConfirm({open, setOpen}: DeleteConfrimProps) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    onClick={handleDeletedProject}
                   >
                     Eliminar
                   </button>

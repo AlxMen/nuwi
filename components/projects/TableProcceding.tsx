@@ -1,5 +1,5 @@
 import React from "react";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 import CardProjects from "./CardProjects";
 import { projects } from "@/src/types";
 import {
@@ -7,6 +7,7 @@ import {
   getProjectCount,
 } from "@/actions/project-action";
 import PaginationPages from "./PaginationPages";
+import RegisterNoFound from "../ui/RegisterNoFound";
 
 export default async function TableProcceding({
   category,
@@ -16,8 +17,7 @@ export default async function TableProcceding({
   category: string;
   query: string;
   currentPage: number;
-  }) {
-  if (currentPage < 0) redirect("/home/projects");
+}) {
   const proccedings = getProjectByCategoryAndQuery(
     category,
     query,
@@ -27,16 +27,20 @@ export default async function TableProcceding({
   const [dataProcced, total] = await Promise.all([proccedings, totalProject]);
   const pages = Math.ceil(total / 10);
 
-  if (currentPage > pages) redirect("/home/projects");
-  
   return (
     <>
-      <div className="xl:grid xl:grid-cols-2 h-full w-full bg-slate-100 p-4 xl:gap-6 overflow-y-auto">
-        {dataProcced.map((pro) => (
-          <CardProjects key={pro.id} info={pro as projects} />
-        ))}
-      </div>
-      <PaginationPages page={currentPage} total={pages} />
+      {dataProcced.length ? (
+        <>
+          <div className="xl:grid xl:grid-cols-2 h-full w-full bg-slate-100 p-4 xl:gap-6 overflow-y-auto">
+            {dataProcced.map((pro) => (
+              <CardProjects key={pro.id} info={pro as projects} />
+            ))}
+          </div>
+          <PaginationPages page={currentPage} total={pages} />
+        </>
+      ) : (
+          <RegisterNoFound />
+      )}
     </>
   );
 }

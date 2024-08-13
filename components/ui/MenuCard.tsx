@@ -63,7 +63,7 @@ export default function MenuCard({ info }: {info: projects}) {
           </MenuItems>
         </Transition>
       </Menu>
-      <DeleteConfirm open={open} setOpen={setOpen} />
+      <DeleteConfirm open={open} setOpen={setOpen} id={info.id} />
       <EditProject modalEdit={openEdit} setModalEdit={setOpenEdit} id={info.id} name={info.name} status={info.status} />
     </>
   );
