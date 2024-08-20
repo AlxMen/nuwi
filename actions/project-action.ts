@@ -36,6 +36,18 @@ export async function getProjectCount(query: string, category: string){
     },
   });
 }
+
+export async function getProjectById(id: string) {
+  return await prisma.proceeding.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      lastuser: true,
+    },
+  });
+}
+
 export async function getProjectByCategoryAndQuery(
   category: string,
   query: string,
@@ -43,7 +55,7 @@ export async function getProjectByCategoryAndQuery(
 ) {
   const pageSize = 10;
   const skip = (currentPage - 1) * pageSize;
-
+  
   return await prisma.proceeding.findMany({
     take: pageSize,
     skip,
@@ -58,7 +70,7 @@ export async function getProjectByCategoryAndQuery(
         {
           nExp: {
             contains: query,
-            mode: "insensitive",
+            mode: "insensitive"
           },
         },
         {
@@ -145,6 +157,17 @@ export async function updateProject(data: unknown) {
 }
 
 export async function deleteProject(id: string) {
-  console.log(id);
+  const response = await prisma.proceeding.delete({
+    where: { id },
+  });
+
+  if (!response) {
+    return {
+      errors: [{ message: "No se pudo eliminar el proyecto" }],
+    };
+  }
+  else {
+    redirect(`/home/${response.category}`)
+  }
   
 }

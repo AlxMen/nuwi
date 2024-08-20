@@ -6,7 +6,7 @@ export default function Filter() {
       <form action="" className="flex  flex-col gap-4">
         <input
           type="text"
-          className="w-full h-8 border border-black placeholder:text-center rounded-md"
+          className="w-full h-8 border border-black placeholder:text-center text-center rounded-md"
           placeholder="Buscador"
         />
 

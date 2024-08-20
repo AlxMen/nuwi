@@ -17,6 +17,7 @@ export default function CardProjects({ info }: { info: projects }) {
     name,
     status,
     type,
+    category,
     applicant,
     createdexp,
     lastupdate,
@@ -71,7 +72,7 @@ export default function CardProjects({ info }: { info: projects }) {
           </div>
           <div className="flex justify-end border-t border-black bg-yellow-400 rounded-b-xl p-2">
             <Link
-              href={"/home/projects/1"}
+              href={`/home/${category}/${info.id}`}
               className="text-center text-xl text-white font-bold bg-blue-700 p-1 rounded-md hover:bg-blue-800"
             >
               Abrir Proyecto

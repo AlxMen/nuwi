@@ -2,6 +2,7 @@ import { deleteProject } from '@/actions/project-action';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import React, { Dispatch, SetStateAction } from 'react'
 import { BsExclamationOctagonFill } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 
 type DeleteConfrimProps = {
   open: boolean;
@@ -14,7 +15,14 @@ export default function DeleteConfirm({open, setOpen, id}: DeleteConfrimProps) {
   const handleDeletedProject = async () => {
     
     const response = await deleteProject(id)
+
+    if (response?.errors) {
+      toast.error(response.errors.toString());
+      setOpen(false);
+    }
     
+    toast.success("Proyecto eliminado exitosamente");
+    setOpen(false);
   }
 
   return (

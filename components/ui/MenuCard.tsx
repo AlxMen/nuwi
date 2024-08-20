@@ -38,7 +38,7 @@ export default function MenuCard({ info }: {info: projects}) {
           >
             <MenuItem>
               <Link
-                href={"/home/projects/1"}
+                href={`/home/${info.category}/${info.id}`}
                 className="group bg-blue-700 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-blue-800"
               >
                 Abrir

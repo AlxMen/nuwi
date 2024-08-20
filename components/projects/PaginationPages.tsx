@@ -1,7 +1,16 @@
 "use client";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Pagination, PaginationItem, PaginationRenderItemParams } from "@mui/material";
+import {
+  redirect,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import {
+  Pagination,
+  PaginationItem,
+  PaginationRenderItemParams,
+} from "@mui/material";
 
 export default function PaginationPages({
   page,
@@ -9,17 +18,16 @@ export default function PaginationPages({
 }: {
   page: number;
   total: number;
-  }) {
+}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const params = new URLSearchParams(searchParams);
 
+  
+
   const RoutingPath = (item: PaginationRenderItemParams) => {
-    if (item.page) {
-      params.set("page", item.page.toString());
-      return(`${pathname}?${params.toString()}`);
-    }
-    return `${pathname}`;
+    params.set("page", item.page!.toString());
+    return `${pathname}?${params.toString()}`;
   };
 
   return (

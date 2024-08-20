@@ -17,15 +17,21 @@ export default async function TableProcceding({
   category: string;
   query: string;
   currentPage: number;
-}) {
+  }) {
+  
+  
   const proccedings = getProjectByCategoryAndQuery(
     category,
     query,
     currentPage
   );
   const totalProject = getProjectCount(query, category);
+
   const [dataProcced, total] = await Promise.all([proccedings, totalProject]);
-  const pages = Math.ceil(total / 10);
+  const pages = Math.ceil(total / 10); 
+  if (dataProcced.length === 0 && query) {
+    redirect(`/home/${category}?page=1&search=${query}`);  
+  }
 
   return (
     <>
@@ -39,7 +45,7 @@ export default async function TableProcceding({
           <PaginationPages page={currentPage} total={pages} />
         </>
       ) : (
-          <RegisterNoFound />
+        <RegisterNoFound />
       )}
     </>
   );
