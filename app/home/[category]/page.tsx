@@ -5,7 +5,7 @@ import NavBar from "@/components/ui/NavBar";
 import { CardsSkeleton } from "@/components/ui/Skeleton";
 import { Suspense } from "react";
 
-export default async function ProjectPage({
+export default function ProjectPage({
   params,
   searchParams,
 }: {

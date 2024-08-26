@@ -20,7 +20,7 @@ export default function RootLayout({
     <GlobalProvaider>
       <html lang="en">
         <head>
-          <link rel="icon" href="NuWi1.png" />
+          <link rel="icon" href="/NuWi1.png" className="h-3 w-3" />
         </head>
         <body className={inter.className}>{children}</body>
       </html>

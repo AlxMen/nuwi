@@ -6,8 +6,9 @@ import ModalAddNewFile from "@/components/ui/ModalAddNewFile";
 
 
 export default async function page({ params }: { params: { exp: string } }) {
-  
   const data = await getProjectById(params.exp)
+  
+  const { id } = data!
 
   return (
     <>
@@ -18,7 +19,7 @@ export default async function page({ params }: { params: { exp: string } }) {
             <p className="text-2xl">{data?.name} {data?.type}</p>
           </div>
           <div className="flex items-center gap-2 p-2">
-            <ModalAddNewFile />
+            <ModalAddNewFile procced={id} />
           </div>
         </div>
         <div className="flex h-full">

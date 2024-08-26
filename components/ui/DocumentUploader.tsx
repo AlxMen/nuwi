@@ -1,4 +1,5 @@
-import { createDocument } from "@/actions/document-action";
+import { createDocument, uploadFile } from "@/actions/document-action";
+import { useMyContext } from "@/src/context/DataProvaider";
 import { DocumentSchema } from "@/src/schema";
 import { currentDate } from "@/src/utils/currentDate";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -7,47 +8,66 @@ import { toast } from "react-toastify";
 
 type DocumentUploaderProps = {
   setShowModal: Dispatch<SetStateAction<boolean>>;
+  procced: string;
 };
 
 export default function DocumentUploader({
   setShowModal,
+  procced,
 }: DocumentUploaderProps) {
   const [file, setFile] = useState<File | null>();
 
-  const handleActionSubmit = async (formData: FormData) => {
+  const { dataGlobal } = useMyContext();
 
+  const handleActionSubmit = async (formData: FormData) => {
     const filename = file ? `${currentDate()}_${file.name}` : "defaultFile";
 
     const filePath = `./public/uploads/${filename}`;
 
     file ? formData.append("file", filePath) : formData.append("file", "");
-    
-    const data = {
-      name: formData.get("name"),
-      date: formData.get("date"),
-      regisNumber: formData.get("registrationNumber"),
-      path: formData.get("file"),
+
+    const fileFormData = new FormData();
+    if (file) {
+      fileFormData.append("file", file, filename);
     }
+
+    const data = {
+      name: formData.get("name")!,
+      date: formData.get("date")!,
+      regisNumber: formData.get("registrationNumber")!,
+      path: formData.get("file")!,
+    };
     
     const result = DocumentSchema.safeParse(data);
+
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
-      })
-      return
+      });
+      return;
     }
-    
-    const response = await createDocument(data)
+    if (file) {
+      const uploadResponse = await uploadFile(fileFormData)
+      if (uploadResponse?.error) {
+        toast.error(uploadResponse.error);
+        return
+      }
+
+    }
+
+    const response = await createDocument(data, procced, dataGlobal.id);
     if (response?.errors) {
       response.errors.forEach((issue) => {
         toast.error(issue.message);
       });
-      return
+      return;
     }
 
-
+    if (response?.message) {
+      toast.success(response.message);
+      setShowModal(false);
+    }
   };
-  
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -71,7 +91,7 @@ export default function DocumentUploader({
               <input
                 id="name"
                 type="text"
-                className="h-8 w-full border border-black placeholder:text-center rounded-md"
+                className="h-8 w-full border border-black placeholder:text-center rounded-md text-center"
                 placeholder="Nombre del Documento"
                 name="name"
               />
@@ -173,3 +193,4 @@ export default function DocumentUploader({
     </>
   );
 }
+

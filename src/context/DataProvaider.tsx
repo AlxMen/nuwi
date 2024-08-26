@@ -21,6 +21,7 @@ export const GlobalContext = createContext<GlobalContextType | undefined>(
 
 export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
   const [dataGlobal, setDataGlobal] = useState<DataUser>({
+    id: "",
     name: "",
     role: "",
     ext: 0,

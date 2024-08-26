@@ -1,45 +1,46 @@
-// pages/api/upload.ts
-"use server"
-import fs from "fs";
+import { NextRequest, NextResponse } from "next/server";
+import { writeFile } from "fs/promises";
 import path from "path";
-import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-  try {
-    // Obtener el archivo del cuerpo de la solicitud
-    const formData = await request.formData();
-    console.log(formData);
-    
-    /*
-    const file = formData.get("file") as File | null;
-    // Guardar el archivo en el servidor
-    const filename = file ? `${Date.now()}_${file.name}` : "defaultFile";
-    console.log(file?.name, filename);
+export async function POST(request: NextRequest) {
+  const data = await request.formData();
+  const file: File | null = data.get("file") as unknown as File;
 
-    const filePath = `./public/uploads/${filename}`;
-
-    if (file instanceof File) {
-      const buffer = await new Response(file).arrayBuffer();
-      +(await fs.promises.writeFile(filePath, Buffer.from(buffer)));
-    } else {
-      return NextResponse.json(
-        { message: "No se encontró el archivo" },
-        { status: 400 }
-      );
-    }
-
-    // Devolver la ruta del archivo
-    const relativePath = path.relative(process.cwd(), filePath);
-
-    return NextResponse.json({
-      message: "Archivo subido correctamente",
-      filePath: relativePath,
-    });
-    */
-  } catch (error) {
+  if (!file) {
     return NextResponse.json(
-      { message: (error as Error).message },
+      { success: false, message: "No file uploaded" },
       { status: 400 }
     );
   }
+
+  console.log('estoy aqui');
+  
+  
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  // Asegúrate de que este directorio exista y tenga los permisos correctos
+  const uploadDir = path.join(process.cwd(), "public", "uploads");
+  const filePath = path.join(uploadDir, file.name);
+
+  try {
+    await writeFile(filePath, buffer);
+    console.log("File saved to", filePath);
+    return NextResponse.json({
+      success: true,
+      message: "File uploaded successfully",
+    });
+  } catch (error) {
+    console.error("Error saving file:", error);
+    return NextResponse.json(
+      { success: false, message: "Error saving file" },
+      { status: 500 }
+    );
+  }
 }
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};

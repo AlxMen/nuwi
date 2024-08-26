@@ -3,64 +3,9 @@ import { useState } from "react";
 import DocumentUploader from "./DocumentUploader";
 
 
-export default function ModalAddNewFile() {
+export default function ModalAddNewFile({ procced }: { procced: string }) {
+  
   const [showModal, setShowModal] = useState(false);
-  /*
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setShowModal(false);
-    console.log(formData);
-
-    if (formData.file) {
-      try {
-        // Subir el archivo al API
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: formData.file,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        if (response.ok) {
-          const { filePath } = await response.json();
-          console.log("Archivo subido correctamente:", filePath);
-        } else {
-          try {
-            const errorData = await response.json();
-            console.error("Error al subir el archivo:", errorData.message);
-          } catch (parseError) {
-            console.error(
-              "Error al procesar la respuesta de la API:",
-              response.statusText
-            );
-          }
-        }
-      } catch (error) {
-        console.error("Error al subir el archivo:", (error as Error).message);
-      }
-    }
-  };
-  */
-  
-  
-
-  // const handleInputChange = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  //   field: keyof FormData
-  // ) => {
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [field]: e.target.value,
-  //   }));
-  // };
-
-  // const handleFileChange = (file: File | null) => {
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     file,
-  //   }));
-  // };
 
   return (
     <>
@@ -94,6 +39,7 @@ export default function ModalAddNewFile() {
 
                 <DocumentUploader
                   setShowModal={setShowModal}
+                  procced={procced}
                 />
               </div>
             </div>

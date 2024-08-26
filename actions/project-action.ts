@@ -38,7 +38,8 @@ export async function getProjectCount(query: string, category: string){
 }
 
 export async function getProjectById(id: string) {
-  return await prisma.proceeding.findUnique({
+
+  return await prisma.proceeding.findFirst({
     where: {
       id,
     },
