@@ -12,15 +12,12 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   }
-
-  console.log('estoy aqui');
-  
   
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
   // Asegúrate de que este directorio exista y tenga los permisos correctos
-  const uploadDir = path.join(process.cwd(), "public", "uploads");
+  const uploadDir = path.join(process.cwd(), "uploads");
   const filePath = path.join(uploadDir, file.name);
 
   try {

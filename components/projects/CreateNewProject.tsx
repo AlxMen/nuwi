@@ -5,7 +5,6 @@ import { useMyContext } from "@/src/context/DataProvaider";
 import { ProjectSchema } from "@/src/schema";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { revalidatePath } from "next/cache";
 import { redirect, usePathname } from "next/navigation";
 
 export default function CreateNewProject({ category }: { category: string }) {

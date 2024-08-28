@@ -1,29 +1,36 @@
-"use client";
-import Link from "next/link";
-import React, { useState } from "react";
-import { BsFileEarmarkPdf } from "react-icons/bs";
-import MenuDoc from "./MenuDoc";
-import EditDocument from "./EditDocument";
+import { getDocumentByProject } from "@/actions/document-action";
+import DocumentCard from "./DocumentCard";
+import { Document } from "@prisma/client";
 
-export default function ListDocument() {
-  const [modal, setModal] = useState(false);
+export default async function ListDocument({
+  procced,
+  searchParams,
+}: {
+  procced: string;
+  searchParams: {
+    search?: string;
+    page?: string;
+    filter?: string;
+  };
+  }) {
+  
+  const query = searchParams?.search || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  const documents = await getDocumentByProject(procced, currentPage, query);
 
   return (
     <>
       <div className="bg-yellow-100 max-h-[calc(100vh-11rem)] border border-black w-5/6 p-2 space-y-3 overflow-y-auto">
-        <div className="bg-white h-12 w-full border-b-2 border-black shadow-xl flex justify-between p-2">
-          <div>
-            <Link href={""} target="_blank" className="flex items-center gap-2">
-              <BsFileEarmarkPdf className="text-red-600 size-8 cursor-pointer" />
-              <h1 className="hover:underline hover:cursor-pointer hover:italic hover:text-sky-500">
-                {"aaaa/mm/dd"}_{"Nº Registro"}_{"nombre del documento"}
-              </h1>
-            </Link>
-          </div>
-          <MenuDoc setModal={setModal} />
-        </div>
+        {documents.length ? (
+          documents.map((doc) => (
+            <DocumentCard key={doc.id} info={doc as Document} />
+          ))
+        ) : (
+          <h1 className="text-xl text-center bg-slate-100 border-2 rounded-lg border-blue-600 font-bold">
+            No hay Documentos en este Procedimiento
+          </h1>
+        )}
       </div>
-      <EditDocument modal={modal} setModal={setModal} />
     </>
   );
 }

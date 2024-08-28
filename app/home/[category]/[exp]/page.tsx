@@ -3,12 +3,20 @@ import Filter from "@/components/ui/Filter";
 import ListDocument from "@/components/ui/ListDocument";
 import ModalAddNewFile from "@/components/ui/ModalAddNewFile";
 
+export default async function page({
+  params,
+  searchParams,
+}: {
+  params: { exp: string };
+    searchParams: {
+      search?: string;
+      page?: string;
+      filter?: string
+    };
+}) {
+  const data = await getProjectById(params.exp);
 
-
-export default async function page({ params }: { params: { exp: string } }) {
-  const data = await getProjectById(params.exp)
-  
-  const { id } = data!
+  const { id } = data!;
 
   return (
     <>
@@ -16,7 +24,9 @@ export default async function page({ params }: { params: { exp: string } }) {
         <div className="bg-blue-800 w-full h-14 flex justify-between border-b border-black">
           <div className="pl-2 text-white font-black text-md">
             <p>Nº {data?.nExp}</p>
-            <p className="text-2xl">{data?.name} {data?.type}</p>
+            <p className="text-2xl">
+              {data?.name} {data?.type}
+            </p>
           </div>
           <div className="flex items-center gap-2 p-2">
             <ModalAddNewFile procced={id} />
@@ -24,7 +34,9 @@ export default async function page({ params }: { params: { exp: string } }) {
         </div>
         <div className="flex h-full">
           <Filter />
-          <ListDocument />
+          <ListDocument procced={id} searchParams={
+            searchParams
+          } />
         </div>
       </div>
     </>

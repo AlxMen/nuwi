@@ -16,13 +16,12 @@ export default function DocumentUploader({
   procced,
 }: DocumentUploaderProps) {
   const [file, setFile] = useState<File | null>();
-
   const { dataGlobal } = useMyContext();
 
   const handleActionSubmit = async (formData: FormData) => {
     const filename = file ? `${currentDate()}_${file.name}` : "defaultFile";
 
-    const filePath = `./public/uploads/${filename}`;
+    const filePath = `uploads/${filename}`;
 
     file ? formData.append("file", filePath) : formData.append("file", "");
 

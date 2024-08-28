@@ -1,11 +1,13 @@
+import { Document } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 
 type EditDocumentProps = {
   modal: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
+  info: Document
 };
 
-export default function EditDocument({ modal, setModal }: EditDocumentProps) {
+export default function EditDocument({ modal, setModal, info }: EditDocumentProps) {
   return (
     <>
       {modal ? (

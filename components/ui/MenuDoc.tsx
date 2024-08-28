@@ -8,12 +8,15 @@ import {
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { Dispatch, SetStateAction, useState } from "react";
 import DeleteConfirm from "./DeleteConfirm";
+import Link from "next/link";
 
 type MenuDocProps = {
   setModal: Dispatch<SetStateAction<boolean>>;
+  path: string;
+  id: string;
 };
 
-export default function MenuDoc({ setModal }: MenuDocProps) {
+export default function MenuDoc({ setModal, path, id }: MenuDocProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -35,9 +38,9 @@ export default function MenuDoc({ setModal }: MenuDocProps) {
             className="w-52 origin-top-right rounded-xl shadow-2xl bg-white p-1 space-y-2 text-white text-md [--anchor-gap:var(--spacing-1)] focus:outline-none"
           >
             <MenuItem>
-              <button className="group bg-blue-700 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-blue-800">
+              <Link href={path} target="_blank" className="group bg-blue-700 flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-blue-800">
                 Abrir
-              </button>
+              </Link>
             </MenuItem>
             <MenuItem>
               <button
@@ -58,7 +61,7 @@ export default function MenuDoc({ setModal }: MenuDocProps) {
           </MenuItems>
         </Transition>
       </Menu>
-      <DeleteConfirm open={open} setOpen={setOpen} />
+      <DeleteConfirm open={open} setOpen={setOpen} id={id} />
     </>
   );
 }

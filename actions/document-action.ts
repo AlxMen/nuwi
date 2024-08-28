@@ -4,7 +4,6 @@ import { prisma } from "@/src/lib/prisma";
 import { DocumentSchema } from "@/src/schema";
 import { currentDate } from "@/src/utils/currentDate";
 
-
 export async function uploadFile(fileFormData: FormData) {
   try {
     await fetch("http://localhost:3000/api/upload", {
@@ -15,12 +14,12 @@ export async function uploadFile(fileFormData: FormData) {
     console.error("Error uploading file:", error);
     return { error: "Failed to upload file" };
   }
-};
+}
 
 export async function createDocument(
   data: unknown,
   procced: string,
-  user: string,
+  user: string
 ) {
   const result = DocumentSchema.safeParse(data);
 
@@ -52,8 +51,57 @@ export async function createDocument(
     return {
       message: "Documento creado exitosamente",
     };
-
   } catch (error) {
     return { errors: [{ message: "Hubo un error al crear el documento" }] };
   }
+}
+
+export async function getTotalDocumentsByProject(projectId: string) {
+  return await prisma.document.count({
+    where: {
+      proceedId: projectId,
+    },
+  });
+}
+
+export async function getDocumentByProject(
+  projectId: string,
+  currentPage: number,
+  query: string
+) {
+  const pageSize = 20;
+  const skip = (currentPage - 1) * pageSize;
+
+  return await prisma.document.findMany({
+    take: pageSize,
+    skip,
+    orderBy: [
+      {
+        date: "desc",
+      }
+    ],
+    where: {
+      proceedId: projectId,
+      OR: [
+        {
+          name: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          regisNumber: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          date: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
+  });
 }
