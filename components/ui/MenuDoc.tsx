@@ -7,8 +7,8 @@ import {
 } from "@headlessui/react";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { Dispatch, SetStateAction, useState } from "react";
-import DeleteConfirm from "./DeleteConfirm";
 import Link from "next/link";
+import DeleteConfirmDocument from "./DeleteConfirmDocument";
 
 type MenuDocProps = {
   setModal: Dispatch<SetStateAction<boolean>>;
@@ -61,7 +61,7 @@ export default function MenuDoc({ setModal, path, id }: MenuDocProps) {
           </MenuItems>
         </Transition>
       </Menu>
-      <DeleteConfirm open={open} setOpen={setOpen} id={id} />
+      <DeleteConfirmDocument open={open} setOpen={setOpen} id={id} />
     </>
   );
 }

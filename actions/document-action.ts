@@ -142,11 +142,22 @@ export async function updateDocument(
   })
   if (!response) {
     return {
-      errors: [{ message: "No se pudo actualizar el proyecto" }],
+      errors: [{ message: "No se pudo actualizar el documento" }],
     };
   } else {
     return {
       message: "Documento actualizado exitosamente",
+    };
+  }
+}
+
+export async function deleteDocument(id: string) {
+  const response = await prisma.document.delete({
+    where: { id },
+  });
+  if (!response) {
+    return {
+      errors: [{ message: "No se pudo eliminar el documento" }],
     };
   }
 }
