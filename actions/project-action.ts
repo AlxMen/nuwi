@@ -108,8 +108,6 @@ export async function createProject(data: unknown, email: string) {
 
   const dateupdate = currentDate();
 
-  console.log(dateupdate);
-
   const response = await prisma.proceeding.create({
     data: {
       nExp: result.data.nexp,

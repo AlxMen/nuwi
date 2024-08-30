@@ -41,7 +41,7 @@ export default function Filter() {
             type="radio"
             name="filter"
             id="filter"
-            onChange={(e) => handleOrder("asc")}
+            onChange={(e) => handleOrder("0")}
             defaultChecked
           />
           <h3 className="flex items-center gap-1">
@@ -54,7 +54,7 @@ export default function Filter() {
             type="radio"
             name="filter"
             id="filter"
-            onChange={(e) => handleOrder("dec")}
+            onChange={(e) => handleOrder("1")}
           />
           <h3 className="flex items-center gap-1">
             Fecha <FaArrowUp />
@@ -66,7 +66,7 @@ export default function Filter() {
             type="radio"
             name="filter"
             id="filter"
-            onChange={(e) => handleOrder("exp")}
+            onChange={(e) => handleOrder("2")}
           />
           <h3>Nº Expediente</h3>
         </div>
@@ -76,7 +76,7 @@ export default function Filter() {
             type="radio"
             name="filter"
             id="filter"
-            onChange={(e) => handleOrder("name")}
+            onChange={(e) => handleOrder("3")}
           />
           <h3>Nombre</h3>
         </div>

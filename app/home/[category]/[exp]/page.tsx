@@ -7,11 +7,11 @@ export default async function page({
   params,
   searchParams,
 }: {
-  params: { exp: string };
+  params: { exp: string, category: string };
     searchParams: {
       search?: string;
       page?: string;
-      filter?: string
+      order?: string
     };
 }) {
   const data = await getProjectById(params.exp);
@@ -36,7 +36,7 @@ export default async function page({
           <Filter />
           <ListDocument procced={id} searchParams={
             searchParams
-          } />
+          } category={params.category} />
         </div>
       </div>
     </>

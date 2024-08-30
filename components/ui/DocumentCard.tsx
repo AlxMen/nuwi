@@ -6,7 +6,7 @@ import { useState } from "react";
 import EditDocument from "./EditDocument";
 import { Document } from "@prisma/client";
 
-export default function DocumentCard({info}: {info: Document}) {
+export default function DocumentCard({info, category}: {info: Document, category: string}) {
   const [modal, setModal] = useState(false);
   const raiz = 'http://localhost:3000/'
   
@@ -22,7 +22,7 @@ export default function DocumentCard({info}: {info: Document}) {
         </Link>
       </div>
       <MenuDoc setModal={setModal} path={raiz+info.path} id={info.id} />
-      <EditDocument modal={modal} setModal={setModal} info={info} />
+      <EditDocument modal={modal} setModal={setModal} info={info} category={category} />
     </div>
   );
 }

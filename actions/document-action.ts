@@ -67,17 +67,35 @@ export async function getTotalDocumentsByProject(projectId: string) {
 export async function getDocumentByProject(
   projectId: string,
   currentPage: number,
-  query: string
+  query: string,
+  filterOr: string
 ) {
   const pageSize = 20;
   const skip = (currentPage - 1) * pageSize;
 
+  const option = Number(filterOr)
+
+  const tipeOption = [
+    "date",
+    "date",
+    "name",
+    "regisNumber",
+  ]
+
+  const filterOrder = [
+    "desc",
+    "asc",
+    "desc",
+    "asc"
+  ]
+  console.log({ [tipeOption[option]]: filterOrder[option] });
+  
   return await prisma.document.findMany({
     take: pageSize,
     skip,
     orderBy: [
       {
-        date: "desc",
+        [tipeOption[option]]: filterOrder[option],
       }
     ],
     where: {
@@ -104,4 +122,31 @@ export async function getDocumentByProject(
       ],
     },
   });
+}
+
+export async function updateDocument(
+  id: string,
+  data: {
+    name: string;
+    date: string;
+    regisNumber: string;
+}
+) { 
+  const response = await prisma.document.update({
+    where: { id },
+    data: {
+      name: data.name,
+      date: data.date,
+      regisNumber: data.regisNumber,
+    }
+  })
+  if (!response) {
+    return {
+      errors: [{ message: "No se pudo actualizar el proyecto" }],
+    };
+  } else {
+    return {
+      message: "Documento actualizado exitosamente",
+    };
+  }
 }
