@@ -10,18 +10,20 @@ export default function DocumentCard({info, category}: {info: Document, category
   const [modal, setModal] = useState(false);
   const raiz = 'http://localhost:3000/'
   
+  const url =raiz + info.path
+  
 
   return (
     <div className="bg-white h-12 w-full border-b-2 border-black shadow-xl flex justify-between p-2">
       <div>
-        <Link href={raiz+info.path} target="_blank" className="flex items-center gap-2">
+        <Link href={url} type="application/pdf" target="_blank" className="flex items-center gap-2">
           <BsFileEarmarkPdf className="text-red-600 size-8 cursor-pointer" />
           <h1 className="hover:underline hover:cursor-pointer hover:italic hover:text-sky-500">
             {info.date}_{info.regisNumber}_{info.name}
           </h1>
         </Link>
       </div>
-      <MenuDoc setModal={setModal} path={raiz+info.path} id={info.id} />
+      <MenuDoc setModal={setModal} path={url} id={info.id} />
       <EditDocument modal={modal} setModal={setModal} info={info} category={category} />
     </div>
   );

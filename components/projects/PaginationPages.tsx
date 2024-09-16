@@ -1,10 +1,7 @@
 "use client";
 import Link from "next/link";
 import {
-  redirect,
-  usePathname,
-  useRouter,
-  useSearchParams,
+  usePathname, useSearchParams
 } from "next/navigation";
 import {
   Pagination,
@@ -37,9 +34,7 @@ export default function PaginationPages({
         count={total}
         renderItem={(item) => (
           <PaginationItem
-            className={`${
-              item.page === page ? "text-black" : "text-amber-300"
-            } bg-blue-700  text-lg font-bold hover:bg-blue-500`}
+            className={`text-amber-300 bg-blue-700  text-lg font-bold hover:bg-blue-500`}
             component={Link}
             href={RoutingPath(item)}
             {...item}

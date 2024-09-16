@@ -56,10 +56,30 @@ export async function createDocument(
   }
 }
 
-export async function getTotalDocumentsByProject(projectId: string) {
+export async function getTotalDocumentsByProject(projectId: string, query: string){
   return await prisma.document.count({
     where: {
       proceedId: projectId,
+      OR: [
+        {
+          name: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          regisNumber: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        {
+          date: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+      ],
     },
   });
 }
@@ -72,23 +92,23 @@ export async function getDocumentByProject(
 ) {
   const pageSize = 20;
   const skip = (currentPage - 1) * pageSize;
-
-  const option = Number(filterOr)
+  console.log(filterOr);
+  
+  const option = Number(filterOr) || 0
 
   const tipeOption = [
     "date",
     "date",
-    "name",
     "regisNumber",
+    "name",
   ]
 
   const filterOrder = [
-    "desc",
     "asc",
     "desc",
-    "asc"
+    "asc",
+    "asc",
   ]
-  console.log({ [tipeOption[option]]: filterOrder[option] });
   
   return await prisma.document.findMany({
     take: pageSize,
