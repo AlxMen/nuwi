@@ -4,7 +4,8 @@ import { useMyContext } from "@/src/context/DataProvaider";
 import Image from "next/image";
 
 export default function Body() {
-  const { dataGlobal } = useMyContext()
+  
+  const { dataGlobal } = useMyContext();
   
   return (
     <div className="ml-2 mt-9 h-4/5 xl:w-full xl:mr-3 w-3/4 text-white flex flex-col justify-center items-center">

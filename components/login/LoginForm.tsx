@@ -1,14 +1,14 @@
 "use client";
 
 import { UserSchema } from "@/src/schema";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { loginUser } from "@/actions/login-user-action";
 import { toast } from "react-toastify";
 import { useMyContext } from "@/src/context/DataProvaider";
 
 export default function LoginForm() {
-
-  const { triggerEffect } = useMyContext()
+  const { triggerEffect } = useMyContext();
+  const { push } = useRouter();
 
   const handleActionSubmit = async (formData: FormData) => {
     const data = {
@@ -34,8 +34,10 @@ export default function LoginForm() {
     }
     if (response?.token) {
       toast.success("Sesión Iniciada Correctamente");
-      localStorage.setItem("token", response.token);
-      redirect("/home");
+      if (localStorage.getItem("token") === "") {
+        localStorage.setItem("token", response.token);
+      }
+      push("/home");
     }
   };
 

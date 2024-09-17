@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
   const buffer = Buffer.from(bytes);
 
   // Asegúrate de que este directorio exista y tenga los permisos correctos
-  const uploadDir = path.join(process.cwd(), "uploads");
+  const uploadDir = path.join(process.cwd(), "public/uploads");
   const filePath = path.join(uploadDir, file.name);
 
   try {

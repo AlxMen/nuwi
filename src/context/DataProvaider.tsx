@@ -9,10 +9,12 @@ import {
 } from "react";
 import jwt from "jsonwebtoken";
 import { DataUser } from "../types";
+import { useRouter } from "next/navigation";
 
 type GlobalContextType = {
   dataGlobal: DataUser;
   triggerEffect: () => void;
+  closeSection: () => void;
 };
 
 export const GlobalContext = createContext<GlobalContextType | undefined>(
@@ -35,38 +37,58 @@ export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
 
   let token: string | null = null;
   let data: DataUser | null = null;
-  useEffect(() => {
-    if (loginButton) {
-      if (typeof window !== "undefined") {
-        token = window.localStorage.getItem("token");
-      }
 
-      if (token) {
-        data = jwt.decode(token) as DataUser;
-      }
+  if (!token) {
+     useEffect(() => {
+       if (typeof window !== "undefined") {
+         token = window.localStorage.getItem("token");
+         if (token) {
+           data = jwt.decode(token) as DataUser;
+         }
 
-      if (data !== null) {
-        setDataGlobal(data);
-      }
-      setLoginButton(false);
-    }
-  }, [loginButton]);
+         if (data !== null) {
+           setDataGlobal(data);
+         }
+       }
+     }, [token]);
+  } else {
+    useEffect(() => {
+      if (loginButton) {
+        if (typeof window !== "undefined") {
+          token = window.localStorage.getItem("token");
+        }
 
-  useEffect(() => {
+        if (token) {
+          data = jwt.decode(token) as DataUser;
+        }
+
+        if (data !== null) {
+          setDataGlobal(data);
+        }
+        setLoginButton(false);
+      }
+    }, [loginButton]);
+  }
+
+
+  const { push } = useRouter();
+  const closeSection = () => {
     if (typeof window !== "undefined") {
-      token = window.localStorage.getItem("token");
-      if (token) {
-        data = jwt.decode(token) as DataUser;
-      }
-
-      if (data !== null) {
-        setDataGlobal(data);
-      }
+      window.localStorage.setItem('token', "");
+      setDataGlobal({
+        id: "",
+        name: "",
+        role: "",
+        ext: 0,
+        email: "",
+      });
+      setLoginButton(false);
+      push("/");
     }
-  }, []);
+  };
 
   return (
-    <GlobalContext.Provider value={{ dataGlobal, triggerEffect }}>
+    <GlobalContext.Provider value={{ dataGlobal, triggerEffect, closeSection }}>
       {children}
     </GlobalContext.Provider>
   );
