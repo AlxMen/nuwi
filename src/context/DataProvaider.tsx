@@ -3,18 +3,22 @@
 import {
   createContext,
   ReactNode,
-  useContext,
-  useEffect,
-  useState,
+  useContext, useEffect, useState
 } from "react";
 import jwt from "jsonwebtoken";
 import { DataUser } from "../types";
 import { useRouter } from "next/navigation";
+import { getUserProfile } from "@/actions/login-user-action";
 
 type GlobalContextType = {
   dataGlobal: DataUser;
-  triggerEffect: () => void;
   closeSection: () => void;
+  dataUserLogin: (data: string) => void;
+};
+
+type DataLoginType = {
+  ext: number;
+  email: string;
 };
 
 export const GlobalContext = createContext<GlobalContextType | undefined>(
@@ -23,72 +27,55 @@ export const GlobalContext = createContext<GlobalContextType | undefined>(
 
 export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
   const [dataGlobal, setDataGlobal] = useState<DataUser>({
-    id: "",
     name: "",
     role: "",
     ext: 0,
     email: "",
+    password: "",
   });
-  const [loginButton, setLoginButton] = useState(false);
 
-  const triggerEffect = () => {
-    setLoginButton(true);
-  };
+  const dataUserLogin = async (data: string) => {
 
-  let token: string | null = null;
-  let data: DataUser | null = null;
+    const search = jwt.decode(data) as DataLoginType;
 
-  if (!token) {
-     useEffect(() => {
-       if (typeof window !== "undefined") {
-         token = window.localStorage.getItem("token");
-         if (token) {
-           data = jwt.decode(token) as DataUser;
-         }
+    const info: DataLoginType = {
+      ext: search.ext,
+      email: search.email,
+    }
+    const result = await getUserProfile(info);
 
-         if (data !== null) {
-           setDataGlobal(data);
-         }
-       }
-     }, [token]);
-  } else {
-    useEffect(() => {
-      if (loginButton) {
-        if (typeof window !== "undefined") {
-          token = window.localStorage.getItem("token");
-        }
-
-        if (token) {
-          data = jwt.decode(token) as DataUser;
-        }
-
-        if (data !== null) {
-          setDataGlobal(data);
-        }
-        setLoginButton(false);
-      }
-    }, [loginButton]);
-  }
-
-
-  const { push } = useRouter();
-  const closeSection = () => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem('token', "");
-      setDataGlobal({
-        id: "",
-        name: "",
-        role: "",
-        ext: 0,
-        email: "",
-      });
-      setLoginButton(false);
-      push("/");
+    if (result?.data) {
+      setDataGlobal(result!.data);
     }
   };
 
+  if (typeof window !== "undefined") {
+    if (dataGlobal) {
+      useEffect(() => {
+        const token = window.localStorage.getItem("token");
+        if (token) {
+          dataUserLogin(token);
+        }
+      }, []);
+     }
+   }
+
+  const { push } = useRouter();
+  const closeSection = () => {
+    setDataGlobal({
+      name: "",
+      role: "",
+      ext: 0,
+      email: "",
+      password: "",
+    });
+    push("/");
+  };
+
   return (
-    <GlobalContext.Provider value={{ dataGlobal, triggerEffect, closeSection }}>
+    <GlobalContext.Provider
+      value={{ dataGlobal, closeSection, dataUserLogin }}
+    >
       {children}
     </GlobalContext.Provider>
   );

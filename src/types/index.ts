@@ -11,7 +11,7 @@ export type ProcedItem = Pick<
   | "userId"
 >;
 
-export type DataUser = Pick<User,"id"| "name" | "email" | "ext" | "role">
+export type DataUser = Pick<User,"name" | "email" | "ext" | "role" | "password">
 
 export type projects = {
   lastuser: {

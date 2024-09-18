@@ -13,9 +13,10 @@ export default function Header() {
   const handleClickAction = () => {
     closeSection();
     toast.success("Sesión cerrada correctamente!");
+    localStorage.clear();
     push("/")
   }
-
+  
   return (
     <>
       <header className="bg-blue-900 w-full h-24 gap-4 shadow-lg flex justify-between items-center">
@@ -38,7 +39,7 @@ export default function Header() {
             {dataGlobal.name}
           </Link>
           <button
-            className="border-yellow-400 border-2 rounded-full pl-2 pr-2 ml-5 hover:underline flex items-center gap-1"
+            className="text-black border-yellow-400 border-2 rounded-full pl-2 pr-2 ml-5 bg-yellow-400 hover:bg-yellow-100 flex items-center gap-1"
             onClick={handleClickAction}
           >
             Salir

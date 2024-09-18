@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useMyContext } from "@/src/context/DataProvaider";
 
 export default function LoginForm() {
-  const { triggerEffect } = useMyContext();
+  const { dataUserLogin } = useMyContext();
   const { push } = useRouter();
 
   const handleActionSubmit = async (formData: FormData) => {
@@ -34,9 +34,8 @@ export default function LoginForm() {
     }
     if (response?.token) {
       toast.success("Sesión Iniciada Correctamente");
-      if (localStorage.getItem("token") === "") {
-        localStorage.setItem("token", response.token);
-      }
+      dataUserLogin(response.token);
+      localStorage.setItem("token", response.token);
       push("/home");
     }
   };
@@ -78,7 +77,6 @@ export default function LoginForm() {
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer rounded-xl"
-            onClick={triggerEffect}
           >
             Iniciar Sesion
           </button>

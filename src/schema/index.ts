@@ -9,6 +9,11 @@ export const UserSchema = z.object({
   password: z.string().min(1, "La contraseña es obligatoria"),
 })
 
+export const DataUserSchema = z.object({
+  ext: z.number(),
+  email: z.string().min(1, "El email del usuario es requerido"),
+});
+
 export const ProjectSchema = z.object({
   name: z.string().min(1, "El nombre del proyecto es requerido"),
   category: z.string().min(1, "Es Obligatorio elegir una Categoria"),
