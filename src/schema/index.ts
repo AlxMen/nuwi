@@ -1,3 +1,4 @@
+import { PassThrough } from "stream";
 import { z } from "zod";
 
 export const SearchSchema = z.object({
@@ -13,6 +14,15 @@ export const DataUserSchema = z.object({
   ext: z.number(),
   email: z.string().min(1, "El email del usuario es requerido"),
 });
+
+export const UserChangeSchema = z.object({
+  name: z.string().min(1, "El Nombre es Obligatorio"),
+  email: z.string().min(1, "El email es obligatorio"),
+});
+
+export const CorrectPasswordSchema = z.object({
+  password: z.string().min(1, "La contraseña es obligatoria")
+})
 
 export const ProjectSchema = z.object({
   name: z.string().min(1, "El nombre del proyecto es requerido"),

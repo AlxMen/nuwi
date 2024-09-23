@@ -2,7 +2,7 @@ import Header from "@/components/home/Header";
 import ToastNotification from "@/components/ui/ToastNotification";
 import React from "react";
 
-export default function HomeLayout({
+export default function UserLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

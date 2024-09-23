@@ -1,7 +1,8 @@
 "use server";
 
 import { prisma } from "@/src/lib/prisma";
-import { DataUserSchema, UserSchema } from "@/src/schema";
+import { CorrectPasswordSchema, DataUserSchema, UserChangeSchema, UserSchema } from "@/src/schema";
+import { error } from "console";
 import jwt from "jsonwebtoken";
 
 export async function loginUser(data: unknown) {
@@ -57,15 +58,77 @@ export async function getUserProfile(info: unknown) {
     } else {
       return {
         data: {
+          id: user.id,
           ext: user.ext,
           email: user.email,
           name: user.name,
           role: user.role,
-          password: user.password,
         },
       };
     }
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function updateUserData(data: unknown, id: string) { 
+  const result = UserChangeSchema.safeParse(data);
+
+  if (!result.success) {
+    return { errors: result.error.issues };
+  }
+
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: result.data.name,
+        email: result.data.email,
+      },
+    });   
+
+    if (!user) {
+      return { errors: [{ message: "Usuario o contraseña incorrectos" }] };
+    } else {
+      return {
+        message: "Usuario actualizado correctamente",
+      };
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
+export async function changePasswordUser(data: unknown, id: string) {
+  const result = CorrectPasswordSchema.safeParse(data)
+
+  if (!result.success) {
+    return { errors: result.error.issues };
+  }
+
+  try {
+    const pass = await prisma.user.update({
+      where: {
+        id: id
+      },
+      data: {
+        password: result.data.password,
+      },
+    })
+
+    if (!pass) {
+      return { errors: [{ message: "la contraseña introducida no cumple los requisitos minimos o el usuario no esta autorizado" }] };
+    } else { 
+      return {
+        message: "Contraseña actualizada correctamente"
+      }
+    }
+
+  } catch (error) {
+    console.log(error);
+    
   }
 }

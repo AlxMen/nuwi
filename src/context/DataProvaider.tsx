@@ -27,11 +27,11 @@ export const GlobalContext = createContext<GlobalContextType | undefined>(
 
 export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
   const [dataGlobal, setDataGlobal] = useState<DataUser>({
+    id: "",
     name: "",
     role: "",
     ext: 0,
     email: "",
-    password: "",
   });
 
   const dataUserLogin = async (data: string) => {
@@ -63,11 +63,11 @@ export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
   const { push } = useRouter();
   const closeSection = () => {
     setDataGlobal({
+      id: "",
       name: "",
       role: "",
       ext: 0,
       email: "",
-      password: "",
     });
     push("/");
   };

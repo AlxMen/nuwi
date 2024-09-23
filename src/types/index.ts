@@ -1,4 +1,4 @@
-import { User, Category, Proceeding, Document, Ministerio, Cabildo, Gobierno, Ayuntamiento, AsociacionesCaza, AsociacionesEco, AsociacionesVec, Emergencia } from "@prisma/client";
+import { User, Proceeding } from "@prisma/client";
 
 export type ProcedItem = Pick<
   Proceeding,
@@ -11,7 +11,7 @@ export type ProcedItem = Pick<
   | "userId"
 >;
 
-export type DataUser = Pick<User,"name" | "email" | "ext" | "role" | "password">
+export type DataUser = Pick<User, "id" | "name" | "email" | "ext" | "role">
 
 export type projects = {
   lastuser: {

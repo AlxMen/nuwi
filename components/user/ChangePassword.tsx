@@ -1,16 +1,53 @@
-"use client"
+"use client";
 
+import { changePasswordUser } from "@/actions/login-user-action";
+import { useMyContext } from "@/src/context/DataProvaider";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ChangePassword() {
+  const {dataGlobal} = useMyContext()
+  const [showModal, setShowModal] = useState(false);
 
-  const [showModal, setShowModal] = useState(false)
+  const handleSubmitAction = async (formData: FormData) => {
+    const data = {
+      newPassword: formData.get("newPassword") as string,
+      confirmPassword: formData.get("confirmPassword") as string,
+    };
+
+    if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(data.newPassword)) {
+
+      toast.error(
+        "La Contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un número"
+      );
+      return;
+    }
+
+    if (data.newPassword !== data.confirmPassword) {
+      toast.error("Las Contraseñas no son iguales");
+      return;
+    }
+    const pass = {
+      password: data.newPassword
+    }
+    const response = await changePasswordUser(pass, dataGlobal.id);
+    
+    if (response?.errors) {
+      response.errors.forEach((issue) => {
+        toast.error(issue.message);
+      });
+      return;
+    } else {
+      toast.success(response?.message);
+      setShowModal(false);
+    }
+  };
 
   return (
     <>
       <button
         type="button"
-        className="bg-blue-700 w-full h-10 text-white font-bold text-lg shadow-lg rounded-lg cursor-pointer hover:bg-blue-900 hover:shadow-xl hover:border-blue-500 hover:border-2"
+        className="bg-blue-700 w-2/3 h-10 text-white font-bold text-lg shadow-lg rounded-lg cursor-pointer hover:bg-blue-900 hover:shadow-xl hover:border-blue-500 hover:border-2"
         onClick={() => setShowModal(true)}
       >
         Cambiar Contraseña
@@ -33,16 +70,17 @@ export default function ChangePassword() {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto bg-slate-100">
-                  <form action="" className="grid gap-4">
+                <form action={handleSubmitAction}>
+                  <div className="relative p-6 flex flex-col gap-5 bg-slate-100">
                     <div className="flex flex-col justify-center items-center gap-3">
                       <label htmlFor="password" className="text-2xl font-bold">
                         Nueva Contraseña
                       </label>
                       <input
                         type="password"
-                        id="password"
-                        className="border border-black rounded-md h-8 w-2/3"
+                        name="newPassword"
+                        id="newPassword"
+                        className="border border-black rounded-md text-center h-8 w-2/3"
                       />
                     </div>
                     <div className="flex flex-col justify-center items-center gap-3">
@@ -54,29 +92,28 @@ export default function ChangePassword() {
                       </label>
                       <input
                         type="password"
-                        id="passwordRepit"
-                        className="border border-black rounded-md h-8 w-2/3"
+                        name="confirmPassword"
+                        id="confirmPassword"
+                        className="border border-black rounded-md text-center h-8 w-2/3"
                       />
                     </div>
-                  </form>
-                </div>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-black bg-yellow-400 rounded-b">
-                  <button
-                    className="bg-red-500 text-white active:bg-red-600 hover:bg-red-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cerrar
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Guardar Cambios
-                  </button>
-                </div>
+                  </div>
+                  {/*footer*/}
+                  <div className="flex items-center justify-end p-6 border-t border-black bg-yellow-400 rounded-b">
+                    <button
+                      className="bg-red-500 text-white active:bg-red-600 hover:bg-red-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setShowModal(false)}
+                    >
+                      Cerrar
+                    </button>
+                    <input
+                      className="bg-emerald-500 text-white active:bg-emerald-600 hover:bg-emerald-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="submit"
+                      value={"Guardar Contraseña"}
+                    />
+                  </div>
+                </form>
               </div>
             </div>
           </div>
