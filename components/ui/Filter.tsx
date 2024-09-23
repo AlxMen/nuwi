@@ -42,7 +42,6 @@ export default function Filter() {
             name="filter"
             id="filter"
             onChange={(e) => handleOrder("0")}
-            defaultChecked
           />
           <h3 className="flex items-center gap-1">
             Fecha <FaArrowDown />
@@ -55,6 +54,7 @@ export default function Filter() {
             name="filter"
             id="filter"
             onChange={(e) => handleOrder("1")}
+            defaultChecked
           />
           <h3 className="flex items-center gap-1">
             Fecha <FaArrowUp />
