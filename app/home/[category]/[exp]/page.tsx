@@ -11,7 +11,7 @@ export default async function page({
     searchParams: {
       search?: string;
       page?: string;
-      order?: string
+      order?: string;
     };
 }) {
   const data = await getProjectById(params.exp);

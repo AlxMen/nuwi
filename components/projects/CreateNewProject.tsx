@@ -11,7 +11,18 @@ export default function CreateNewProject({ category }: { category: string }) {
   const pathname = usePathname()
   const [showModal, setShowModal] = useState(false);
   const { dataGlobal } = useMyContext();
+
+  /**
+   * 
+   * @param formData Funcion que carga los datos del formulario en un objeto para comprobar su tipos de datos antes de mandarlos hacia la base de datos y crear un nuevo fichero en el aplicativo web
+   * @returns 
+   */
+
   const handleActionSubmit = async (formData: FormData) => {
+    /**
+     * variable constatnte que recoge los valores que se 
+     * introducen en el formulario
+     */
     const data = {
       name: formData.get("name"),
       category: category,
@@ -20,7 +31,9 @@ export default function CreateNewProject({ category }: { category: string }) {
       date: formData.get("date"),
       applicant: formData.get("applicant"),
     };
-
+    /**
+     * comprobacion de tipo de datos que se han introducido
+     */
     const result = ProjectSchema.safeParse(data);
 
     if (!result.success) {
@@ -29,7 +42,9 @@ export default function CreateNewProject({ category }: { category: string }) {
       });
       return;
     }
-
+    /**
+     * Llamamiento a la funcion para crear el nuevo registro en el aplicativo
+     */
     const response = await createProject(data, dataGlobal.email);
 
     if (response?.errors) {

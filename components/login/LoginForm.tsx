@@ -6,9 +6,20 @@ import { loginUser } from "@/actions/login-user-action";
 import { toast } from "react-toastify";
 import { useMyContext } from "@/src/context/DataProvaider";
 
+/**
+ * Formulario de Inicio de sesión
+ * @returns
+ */
+
 export default function LoginForm() {
   const { dataUserLogin } = useMyContext();
   const { push } = useRouter();
+
+  /**
+   * 
+   * @param formData Funcion para recojer los datos introducidos en el formulario para comprobar si existen en la base de datos o no; aparte de controla el tipo de datos que se introducen en el formulario y una vez pasado todos los controles y verificado la existencia de ese usuario hace un redireccionamiento hacia la pagina principal. 
+   * @returns 
+   */
 
   const handleActionSubmit = async (formData: FormData) => {
     const data = {
