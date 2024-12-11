@@ -19,6 +19,11 @@ export default function EditProject({
   status,
   id,
 }: EditProjectProps) {
+  /**
+   * 
+   * @param formData Funcion que actualiza la informacion del archivo donde se adjuntan todos los documentos de un proyecto
+   * @returns 
+   */
   const handleActionSubmit = async (formData: FormData) => {
     const data = {
       id: id,

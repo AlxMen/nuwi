@@ -6,6 +6,9 @@ export default function SearchBar() {
   const pathname = usePathname()
   const {replace} = useRouter()
   
+  /**
+   * Funcion que recoge los datos del buscador para filtrar y mostrar los resultados correspondientes a lo que se busca
+   */
   const handleSearch = useDebouncedCallback((search: string) => {
     const params = new URLSearchParams(searchParams)
     if (search) {

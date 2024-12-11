@@ -9,7 +9,10 @@ import { useRouter } from "next/navigation";
 export default function Header() {
   const { dataGlobal, closeSection } = useMyContext();
   const {push} = useRouter()
-
+  
+  /**
+   * Funcion para limpiar el localstorage y cerrar la sesion activa y redirecciona hacia la pagina de inicio de sesion
+   */
   const handleClickAction = () => {
     closeSection();
     toast.success("Sesión cerrada correctamente!");

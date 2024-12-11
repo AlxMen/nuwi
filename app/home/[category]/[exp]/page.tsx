@@ -13,7 +13,10 @@ export default async function page({
       page?: string;
       order?: string;
     };
-}) {
+  }) {
+  /**
+   * odtencion de datos desde el back de los datos para mostrar en el front
+   */
   const data = await getProjectById(params.exp);
 
   const { id } = data!;

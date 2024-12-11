@@ -2,6 +2,9 @@ import Link from "next/link";
 import MenuCard from "../ui/MenuCard";
 import { projects } from "@/src/types";
 
+/**
+ * Constante para establecer un listado de estados de los documentos a la hora de actualizarlos
+ */
 const statusStyles = [
   { name: "Presentación", style: " bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
   { name: "Subsanación", style: " bg-violet-300 border-2 border-violet-500 w-fit p-1 " },

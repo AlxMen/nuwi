@@ -10,6 +10,11 @@ import { toast } from "react-toastify";
 export default function UserPage() {
   const { dataGlobal } = useMyContext();
 
+  /**
+   * 
+   * @param formData Funcion que recoge todos los datos del formulario para modificar los datos del usuario en la base de datos 
+   * @returns 
+   */
   const handleActionSubmit = async (formData: FormData) => {
     const data = {
       name: formData.get("name"),

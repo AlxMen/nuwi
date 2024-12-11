@@ -14,7 +14,10 @@ export default function ProjectPage({
     search?: string;
     page?: string;
   };
-}) {
+  }) {
+  /**
+   * Datos para el filtrado del buscador y paginacion del aplicativo
+   */
   const query = searchParams?.search || "";
   const currentPage = Number(searchParams?.page) || 1;
   

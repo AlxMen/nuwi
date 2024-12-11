@@ -20,7 +20,11 @@ export default function PaginationPages({
   const pathname = usePathname();
   const params = new URLSearchParams(searchParams);
 
-  
+  /**
+   * 
+   * @param item 
+   * @returns 
+   */
 
   const RoutingPath = (item: PaginationRenderItemParams) => {
     params.set("page", item.page!.toString());
