@@ -8,13 +8,19 @@ import { toast } from "react-toastify";
 export default function ChangePassword() {
   const {dataGlobal} = useMyContext()
   const [showModal, setShowModal] = useState(false);
-
+  /**
+   * 
+   * @param formData Funcion para modificar la contraseña del usuario con comprobacion de seguridad de contraseña fuerte
+   * @returns 
+   */
   const handleSubmitAction = async (formData: FormData) => {
     const data = {
       newPassword: formData.get("newPassword") as string,
       confirmPassword: formData.get("confirmPassword") as string,
     };
-
+    /**
+     * Utilizacion de ternaria para comprobacion de contraseña si es Fuerte o tiene que modificarla
+     */
     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(data.newPassword)) {
 
       toast.error(
@@ -22,7 +28,9 @@ export default function ChangePassword() {
       );
       return;
     }
-
+    /**
+     * comprobacion para saber si esta introducion bien la contraseña y no cometa un error por mala escritura
+     */
     if (data.newPassword !== data.confirmPassword) {
       toast.error("Las Contraseñas no son iguales");
       return;

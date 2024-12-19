@@ -19,13 +19,12 @@ export default function EditDocument({
   category
 }: EditDocumentProps) {
   const { name, regisNumber, date, id } = info;
-
+  /**
+   * 
+   * @param formData Funcion para modificar los datos de los documentos que se subieron a la nube o servidor solo se modifican los datos que se encuentran en la base de datos nombre del documento, fecha y numero de registro
+   * @returns 
+   */
   const handleActionEdit = async (formData: FormData) => {
-    console.log(
-      formData.get("namedoc"),
-      formData.get("date"),
-      formData.get("exp")
-    );
 
     const data = {
       name: formData.get("namedoc"),

@@ -11,7 +11,9 @@ type DeleteConfrimProps = {
 };
 
 export default function DeleteConfirm({open, setOpen, id}: DeleteConfrimProps) {
-
+  /**
+   * Funcion que elimina del registro y de la base de datos
+   */
   const handleDeletedProject = async () => {
     
     const response = await deleteProject(id)

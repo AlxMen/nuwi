@@ -22,7 +22,7 @@ export default function PaginationPages({
 
   /**
    * 
-   * @param item 
+   * @param item Funcion que usa la ruta para implementar paginacion mediate la cantidad de datos que llegan de la base de datos
    * @returns 
    */
 

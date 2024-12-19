@@ -17,12 +17,25 @@ export default function DocumentUploader({
 }: DocumentUploaderProps) {
   const [file, setFile] = useState<File | null>();
   const { dataGlobal } = useMyContext();
-
+  /**
+   * 
+   * @param formData Formulario de subida de documnetos a la nube o servidor de archivos el cual guarda en la base de datos la ruta en la que se guardo con un nombre, fecha y numero de registro mas dicha ruta para acceder a descargar o visualizar dicho documento
+   * @returns 
+   */
   const handleActionSubmit = async (formData: FormData) => {
+    /**
+     * Instanciamos el nombre que recibira el documeto que se vaya a guardar
+     */
     const filename = file ? `${currentDate()}_${file.name}` : "defaultFile";
 
+    /**
+     * Configuramos la ruta propia del documento donde se va a introducir
+     */
     const filePath = `uploads/${filename}`;
 
+    /**
+     * comprobamos que dicho documento se alla adjuntado correctamente si no le mandamos un aviso por si ocurre un error de subida
+     */
     file ? formData.append("file", filePath) : formData.append("file", "");
 
     const fileFormData = new FormData();
@@ -45,6 +58,10 @@ export default function DocumentUploader({
       });
       return;
     }
+
+    /**
+     * Ya una vez cargado los datos se comprueba de nuevo si el fichero esta bien subido antes de mandarlo a la nube o servidor
+     */
     if (file) {
       const uploadResponse = await uploadFile(fileFormData)
       if (uploadResponse?.error) {
@@ -53,7 +70,9 @@ export default function DocumentUploader({
       }
 
     }
-
+    /**
+     * Subida de todos los datos mas el documento hacia la nube o el servidor y creacion de su registro en la base de datos
+     */
     const response = await createDocument(data, procced, dataGlobal.id);
     if (response?.errors) {
       response.errors.forEach((issue) => {

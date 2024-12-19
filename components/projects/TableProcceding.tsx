@@ -19,12 +19,17 @@ export default async function TableProcceding({
   currentPage: number;
   }) {
   
-  
+  /**
+   * Funcion que hace llamamiento al backend mandando datos para filtrar los datos que llegaran de la base de datos 
+   */
   const proccedings = getProjectByCategoryAndQuery(
     category,
     query,
     currentPage
   );
+  /**
+   * Funcion para saber el total para saber cuantas paginas habra en el paginador
+   */
   const totalProject = getProjectCount(query, category);
 
   const [dataProcced, total] = await Promise.all([proccedings, totalProject]);

@@ -24,7 +24,11 @@ type DataLoginType = {
 export const GlobalContext = createContext<GlobalContextType | undefined>(
   undefined
 );
-
+/**
+ * 
+ * @param param0 
+ * @returns 
+ */
 export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
   const [dataGlobal, setDataGlobal] = useState<DataUser>({
     id: "",

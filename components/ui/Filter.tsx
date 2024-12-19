@@ -7,7 +7,9 @@ export default function Filter() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-
+  /**
+   * 
+   */
   const handleSearch = useDebouncedCallback((search: string) => {
     const params = new URLSearchParams(searchParams);
     if (search) {
