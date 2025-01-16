@@ -2,9 +2,8 @@ import Link from "next/link";
 import MenuCard from "../ui/MenuCard";
 import { projects } from "@/src/types";
 
-/**
- * Constante para establecer un listado de estados de los documentos a la hora de actualizarlos
- */
+
+/* La constante `statusStyles` es una matriz de objetos que definen diferentes estilos en función del nombre del estado. Cada objeto de la matriz contiene dos propiedades: `name` y `style`. La propiedad `name` representa el nombre del estado, como "Presentación", "Subsanación", "Inicio", etc. La propiedad `style` contiene las clases CSS que se deben aplicar al elemento cuando el estado coincide con el nombre. */
 const statusStyles = [
   { name: "Presentación", style: " bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
   { name: "Subsanación", style: " bg-violet-300 border-2 border-violet-500 w-fit p-1 " },
@@ -15,6 +14,8 @@ const statusStyles = [
   { name: "Finalizado", style: " bg-amber-300 border-2 border-amber-600 w-fit p-1 " },
 ];
 export default function CardProjects({ info }: { info: projects }) {
+  /* El fragmento de código `const { nExp, name, status, type, category, candidates, createdexp, lastupdate,
+lastuser } = info;` utiliza la desestructuración de objetos en JavaScript. Extrae propiedades específicas del objeto `info` y las asigna a variables individuales con los mismos nombres. */
   const {
     nExp,
     name,
@@ -27,7 +28,6 @@ export default function CardProjects({ info }: { info: projects }) {
     lastuser,
   } = info;
 
-
   return (
     <section className="h-fit w-full bg-white rounded-xl shadow-lg border border-blue-300">
       <div className="lg:order-first">
@@ -35,7 +35,9 @@ export default function CardProjects({ info }: { info: projects }) {
           <div className="flex border-b border-black bg-blue-800 rounded-t-md p-2 justify-between items-center">
             <div>
               <p className="text-white font-black italic">Nº {nExp}</p>
-              <p className="text-white font-bold text-3xl">{name} {type}</p>
+              <p className="text-white font-bold text-3xl">
+                {name} {type}
+              </p>
             </div>
             <MenuCard info={info} />
           </div>
@@ -60,9 +62,13 @@ export default function CardProjects({ info }: { info: projects }) {
             </div>
             <div className="text-sm items-center grid grid-cols-3">
               <h1 className="m-2 font-semibold text-neutral-800">Estado: </h1>
-              <p className={`font-bold italic rounded-lg  ${statusStyles.map(st => {
-                return st.name === status? st.style : "";
-              })}`}>
+              <p
+                className={`font-bold italic rounded-lg  ${statusStyles.map(
+                  (st) => {
+                    return st.name === status ? st.style : "";
+                  }
+                )}`}
+              >
                 {status}
               </p>
             </div>

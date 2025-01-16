@@ -1,5 +1,7 @@
 import { User, Proceeding } from "@prisma/client";
-
+/**
+ * Creacion de los type de datos para su tipologia que usaran durante las comprobaciones y las creaciones de los registro en el aplicativo
+ */
 export type ProcedItem = Pick<
   Proceeding,
   | "createdexp"

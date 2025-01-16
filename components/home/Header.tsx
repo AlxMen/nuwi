@@ -7,19 +7,21 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
+  /* El fragmento de código `const { dataGlobal, closeSection } = useMyContext();` utiliza el gancho `useMyContext` para acceder a los valores `dataGlobal` y `closeSection` desde el contexto proporcionado por el proveedor de contexto `DataProvaider`. */
   const { dataGlobal, closeSection } = useMyContext();
-  const {push} = useRouter()
-  
+  /* `const { push } = useRouter();` extrae la función `push` del gancho `useRouter` proporcionado por Next.js. La función `push` se utiliza para navegar programáticamente a una página diferente en la aplicación. En este caso, se utiliza en la función `handleClickAction` para redirigir al usuario a la página de inicio (`"/"`) después de realizar algunas acciones como cerrar una sección y borrar el almacenamiento local. */
+  const { push } = useRouter();
+
   /**
-   * Funcion para limpiar el localstorage y cerrar la sesion activa y redirecciona hacia la pagina de inicio de sesion
+   * La función handleClickAction cierra una sección, muestra un mensaje de confirmación de éxito, borra el almacenamiento local y redirecciona a la página de inicio.
    */
   const handleClickAction = () => {
     closeSection();
     toast.success("Sesión cerrada correctamente!");
     localStorage.clear();
-    push("/")
-  }
-  
+    push("/");
+  };
+
   return (
     <>
       <header className="bg-blue-900 w-full h-24 gap-4 shadow-lg flex justify-between items-center">

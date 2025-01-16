@@ -1,6 +1,7 @@
-import { PassThrough } from "stream";
 import { z } from "zod";
-
+/**
+ * Esquemas para los mensajes de error en los formularios que en el aplicativo en caso de introduccion de datos erroneos o vacios
+ */
 export const SearchSchema = z.object({
   search: z.string()
 })

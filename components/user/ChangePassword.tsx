@@ -6,40 +6,42 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function ChangePassword() {
-  const {dataGlobal} = useMyContext()
+  /* `const {dataGlobal} = useMyContext()` está utilizando el gancho `useMyContext` para acceder a los datos globales almacenados en el proveedor de contexto y desestructurando la variable `dataGlobal` de este. Esto permite que el componente acceda y utilice los datos globales dentro del contexto. */
+  const { dataGlobal } = useMyContext();
   const [showModal, setShowModal] = useState(false);
   /**
-   * 
-   * @param formData Funcion para modificar la contraseña del usuario con comprobacion de seguridad de contraseña fuerte
-   * @returns 
+   * La función `handleSubmitAction` maneja el envío de formularios para cambiar la contraseña de un usuario,
+   * realiza validaciones y muestra mensajes de error o éxito apropiados.
+   * @param {FormData} formData - El parámetro `formData` en la función `handleSubmitAction` es de tipo FormData, que es un objeto JavaScript integrado que se utiliza para representar datos de formulario al enviarlo mediante una solicitud HTTP. Se utiliza comúnmente junto con la API `FormData` para construir y enviar fácilmente datos de formulario en un formato estructurado
+   * @returns La función `handleSubmitAction` devuelve distintos mensajes en función de determinadas condiciones:
+   * - Si la nueva contraseña no cumple los criterios requeridos (al menos 8 caracteres, incluida una letra mayúscula, una letra minúscula y un número), devuelve un mensaje de error sobre los requisitos de la contraseña.
+   * - Si la nueva contraseña no coincide con la contraseña confirmada, devuelve un mensaje de error que indica que las contraseñas no son iguales.
    */
   const handleSubmitAction = async (formData: FormData) => {
+    /* El fragmento de código `const data = { newPassword: formData.get("newPassword") as string,  confirmPassword: formData.get("confirmPassword") as string, };` está creando un objeto llamado `data` con dos propiedades: `newPassword` y `confirmPassword`.*/
     const data = {
       newPassword: formData.get("newPassword") as string,
       confirmPassword: formData.get("confirmPassword") as string,
     };
-    /**
-     * Utilizacion de ternaria para comprobacion de contraseña si es Fuerte o tiene que modificarla
-     */
+    /* El fragmento de código `if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(data.newPassword))` está realizando una comprobación de validación en el campo `newPassword` para garantizar que cumple con ciertos criterios. */
     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(data.newPassword)) {
-
       toast.error(
         "La Contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un número"
       );
       return;
     }
-    /**
-     * comprobacion para saber si esta introducion bien la contraseña y no cometa un error por mala escritura
-     */
+    /* El bloque de código `if (data.newPassword !== data.confirmPassword) { toast.error("Las Contraseñas no son iguales"); return; }` está verificando si la nueva contraseña ingresada por el usuario no coincide con la contraseña confirmada. Si las dos contraseñas no coinciden, muestra un mensaje de error usando la función `toast.error` indicando que las contraseñas no son iguales y luego sale inmediatamente de la función usando `return;` para evitar la ejecución posterior del proceso de cambio de contraseña. Esta validación asegura que el usuario confirme la nueva contraseña correctamente antes de continuar con la acción de cambio de contraseña. */
     if (data.newPassword !== data.confirmPassword) {
       toast.error("Las Contraseñas no son iguales");
       return;
     }
+    /* El fragmento de código `const pass = { password: data.newPassword };` crea un objeto llamado `pass` con una propiedad `password` a la que se le asigna el valor `data.newPassword`. Este objeto se utiliza para estructurar los datos que se enviarán como parte de la solicitud para cambiar la contraseña del usuario. Al asignar la nueva contraseña ingresada por el usuario a la propiedad `password` en el objeto `pass`, se prepara el formato de datos específico requerido para la funcionalidad de cambio de contraseña. Estos datos estructurados se utilizarán luego en la llamada API posterior para actualizar la contraseña del usuario. */
     const pass = {
-      password: data.newPassword
-    }
+      password: data.newPassword,
+    };
+    /* El fragmento de código `const response = await changePasswordUser(pass, dataGlobal.id);` realiza una llamada asincrónica a la función `changePasswordUser` con el objeto `pass` que contiene la nueva contraseña y `dataGlobal.id` que representa el ID del usuario. Esta función es responsable de cambiar la contraseña del usuario. */
     const response = await changePasswordUser(pass, dataGlobal.id);
-    
+
     if (response?.errors) {
       response.errors.forEach((issue) => {
         toast.error(issue.message);

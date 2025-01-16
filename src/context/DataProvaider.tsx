@@ -26,7 +26,7 @@ export const GlobalContext = createContext<GlobalContextType | undefined>(
 );
 /**
  * 
- * @param param0 
+ * @param param0 Intancia para controlar datos globales que se usan para determinadas funciones de el aplicativo y para filtrados y separacion de datos 
  * @returns 
  */
 export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
@@ -38,6 +38,10 @@ export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
     email: "",
   });
 
+  /**
+   * 
+   * @param data Recogida de datos al iniciar sesion el ususario en el aplicativo para saber que usuario inicio y que se le debe mostrar dependiendo de sus caracteristicas o rango
+   */
   const dataUserLogin = async (data: string) => {
 
     const search = jwt.decode(data) as DataLoginType;

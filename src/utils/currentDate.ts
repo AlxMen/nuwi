@@ -1,3 +1,7 @@
+/**
+ * funcion para adjuntar al registro de un documento o creacion de una instancia la fecha actual de ese dia
+ * @returns 
+ */
 export function currentDate() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();

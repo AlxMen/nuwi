@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { createProject } from "@/actions/project-action";
 import { FaPlus } from "react-icons/fa";
 import { useMyContext } from "@/src/context/DataProvaider";
@@ -8,21 +8,24 @@ import { toast } from "react-toastify";
 import { redirect, usePathname } from "next/navigation";
 
 export default function CreateNewProject({ category }: { category: string }) {
-  const pathname = usePathname()
+  /* `const pathname = usePathname()` utiliza un gancho personalizado `usePathname` para obtener la ruta actual de la aplicación. Esto puede ser útil para la navegación o la representación condicional basada en la ruta actual. */
+  const pathname = usePathname();
+  /* La línea `const [showModal, setShowModal] = useState(false);` declara una variable de estado llamada
+  `showModal` usando el gancho `useState` en React. */
   const [showModal, setShowModal] = useState(false);
+  /* `const { dataGlobal } = useMyContext();` está usando un gancho personalizado `useMyContext` para acceder al objeto `dataGlobal` desde el contexto. Este objeto probablemente contiene datos globales que se comparten entre los componentes de la aplicación. Al desestructurar `dataGlobal` a partir del resultado de `useMyContext()`, el componente puede acceder y usar estos datos globales dentro del componente `CreateNewProject`. */
   const { dataGlobal } = useMyContext();
 
   /**
-   * 
-   * @param formData Funcion que carga los datos del formulario en un objeto para comprobar su tipos de datos antes de mandarlos hacia la base de datos y crear un nuevo fichero en el aplicativo web
-   * @returns 
-   */
+   * La función `handleActionSubmit` procesa datos del formulario, los valida utilizando un esquema, crea un proyecto y muestra mensajes de éxito o error según corresponda.
+   * @param {FormData} formData - El parámetro `formData` de la función `handleActionSubmit` es de
+   tipo FormData, que se utiliza normalmente para  recopilar datos de formularios en un formato de par  clave-valor. Le permite acceder a valores mediante   claves, de forma similar a cómo accedería a valores en un objeto.
+   * @returns La función `handleActionSubmit` no devuelve nada (indefinido) o sale antes con una declaración `return` si hay errores de validación o si hay errores en la respuesta de
 
+   la función `createProject`. Si no hay errores, mostrará un mensaje de éxito usando `toast.success`, ocultará un modal (`setShowModal(false)`) y redireccionará a la ruta de acceso actual.
+   */
   const handleActionSubmit = async (formData: FormData) => {
-    /**
-     * variable constatnte que recoge los valores que se 
-     * introducen en el formulario
-     */
+    /* La declaración `const data` crea un objeto con propiedades que se rellenan con valores recuperados de un objeto `FormData`*/
     const data = {
       name: formData.get("name"),
       category: category,
@@ -31,22 +34,22 @@ export default function CreateNewProject({ category }: { category: string }) {
       date: formData.get("date"),
       applicant: formData.get("applicant"),
     };
-    /**
-     * comprobacion de tipo de datos que se han introducido
-     */
+
+    /* `const result = ProjectSchema.safeParse(data);` está usando una biblioteca de validación de esquemas, probablemente zod o io-ts, para validar el objeto `data` contra `ProjectSchema`. El método `safeParse` se usa normalmente para validar datos contra un esquema y devuelve un objeto con una propiedad `success` que indica si la validación fue exitosa o no. Si la validación es exitosa, el objeto `result` contendrá los datos validados. Si hay errores de validación, el objeto `result` contendrá información sobre los problemas de validación, como mensajes de error. */
     const result = ProjectSchema.safeParse(data);
 
+    /* Este bloque de código verifica el resultado de la validación de los datos del formulario contra el `ProjectSchema`. */
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
       });
       return;
     }
-    /**
-     * Llamamiento a la funcion para crear el nuevo registro en el aplicativo
-     */
+
+    /* La línea `const response = await createProject(data, dataGlobal.email);` llama a la función `createProject` de forma asincrónica con el objeto `data` y la propiedad `email` del objeto `dataGlobal` como argumentos. */
     const response = await createProject(data, dataGlobal.email);
 
+    /* Este bloque de código verifica si el objeto `response` tiene una propiedad `errors` mediante el encadenamiento opcional (`response?.errors`). Si la propiedad `errors` existe y es verdadera (no nula o indefinida), significa que hay errores en la respuesta de la función `createProject`. */
     if (response?.errors) {
       response.errors.forEach((issue) => {
         toast.error(issue.message);
@@ -54,9 +57,9 @@ export default function CreateNewProject({ category }: { category: string }) {
       return;
     }
 
-    toast.success(response?.message)
-    setShowModal(false)
-    redirect(`${pathname}`)
+    toast.success(response?.message);
+    setShowModal(false);
+    redirect(`${pathname}`);
   };
 
   return (
