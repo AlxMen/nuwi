@@ -11,9 +11,7 @@ type DeleteConfrimProps = {
 };
 
 export default function DeleteConfirmDocument({open, setOpen, id}: DeleteConfrimProps) {
-  /**
-   * Funcion que elimina el registro en el aplicativo pero no el la ruta en la que se guardo el archivo
-   */
+  
   const handleDeletedDocument = async () => {
     
     const response = await deleteDocument(id)
