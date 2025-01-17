@@ -23,6 +23,7 @@
     "bcrypt": "^5.1.1",
     "formidable": "^3.5.1",
     "jsonwebtoken": "^9.0.2",
+    "mintlify": "^4.0.322",
     "next": "^14.2.5",
     "next-auth": "^5.0.0-beta.20",
     "next-cloudinary": "^6.6.2",

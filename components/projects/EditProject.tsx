@@ -4,12 +4,14 @@ import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 
 /**
- *El tipo EditProjectProps define las propiedades esperadas por un componente para editar un proyecto en una aplicación TypeScript React.
- * @property {boolean} modalEdit - La propiedad `modalEdit` es un valor booleano que indica si un modal para editar un proyecto está abierto actualmente o no.
- * @property setModalEdit - La propiedad `setModalEdit` es una función que se puede utilizar para actualizar el estado de la propiedad `modalEdit` en el componente padre. Es del tipo `Dispatch<SetStateAction<boolean>>`, lo que significa que es una función que puede realizar una acción para actualizar el estado
- * @property {string} name - La propiedad `name` del tipo `EditProjectProps` representa el nombre de un proyecto. Es un tipo de cadena que se utiliza para almacenar el nombre del proyecto que se está editando.
- * @property {string} status - La propiedad `status` del tipo `EditProjectProps` representa el estado de un proyecto. Es una propiedad de tipo cadena que contiene información sobre el estado actual del proyecto, como "En progreso", "Completado", "En espera", etc.
- * @property {string} id - La propiedad `id` del tipo `EditProjectProps` representa el identificador único de un proyecto. Es un tipo de cadena que se utiliza para identificar de forma única un proyecto específico dentro del sistema.
+ * Propiedades del componente EditProject.
+ * 
+ * @typedef {Object} EditProjectProps
+ * @property {boolean} modalEdit - Estado del modal de edición.
+ * @property {Function} setModalEdit - Función para cambiar el estado del modal de edición.
+ * @property {string} name - Nombre del proyecto.
+ * @property {string} status - Estado del proyecto.
+ * @property {string} id - Identificador del proyecto.
  */
 type EditProjectProps = {
   modalEdit: boolean;
@@ -19,6 +21,16 @@ type EditProjectProps = {
   id: string;
 };
 
+/**
+ * Componente para editar un proyecto existente.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} props.id - Identificador del proyecto a editar.
+ * @param {boolean} props.modalEdit - Estado del modal de edición.
+ * @param {Function} props.setModalEdit - Función para cambiar el estado del modal de edición.
+ * @returns {JSX.Element} Elemento JSX que representa el formulario para editar un proyecto.
+ */
 export default function EditProject({
   modalEdit,
   setModalEdit,
@@ -26,32 +38,30 @@ export default function EditProject({
   status,
   id,
 }: EditProjectProps) {
+
   /**
-   * La función `handleActionSubmit` procesa datos del formulario, los valida utilizando un esquema, actualiza un proyecto y muestra mensajes de éxito o error según corresponda.
-   * @param {FormData} formData - El parámetro `formData` en la función `handleActionSubmit` es de tipo FormData, que normalmente se utiliza para representar datos que se envían en un formulario HTML. Contiene pares clave-valor de datos enviados a través del formulario. En esta función, `formData` se utiliza para extraer valores
-   * @returns La función `handleActionSubmit` no devuelve nada (indefinido) o sale antes de tiempo con una declaración `return` si hay errores de validación o si hay errores en la respuesta de la función `updateProject`. Si todo es correcto, establece `modalEdit` en falso y muestra un mensaje de éxito usando `toast.success`.
+   * Maneja el envío del formulario para editar un proyecto.
+   *
+   * @param {FormData} formData - Datos del formulario de edición de proyecto.
    */
   const handleActionSubmit = async (formData: FormData) => {
-    /* El objeto `const data` crea una estructura de datos que se utilizará para actualizar un proyecto. Incluye las propiedades `id`, `name` y `status`. */
     const data = {
       id: id,
       name: formData.get("name"),
       status: formData.get("status"),
     };
 
-    /* `const result = EditProjectSchema.safeParse(data);` es una línea de código que utiliza una biblioteca de validación de esquemas para analizar y validar el objeto `data` contra el esquema definido en `EditProjectSchema`. */
     const result = EditProjectSchema.safeParse(data);
 
-    /* El bloque de código `if (!result.success) { ... }` verifica si la validación de los datos con respecto al esquema no fue exitosa. Si la validación falla, significa que hay problemas con los datos que no se ajustan al esquema esperado definido en `EditProjectSchema`.*/
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
       });
       return;
     }
-    /* La línea `const response = await updateProject(data);` realiza una llamada asincrónica a la función `updateProject` con el objeto `data` como parámetro. La palabra clave `await` se utiliza para esperar a que se complete la operación asincrónica y devolver el resultado antes de continuar en el código. */
+
     const response = await updateProject(data);
-    /* El código `if (response?.errors)` utiliza encadenamiento opcional (`?.`) para verificar si el objeto `response` existe y tiene una propiedad llamada `errors`. Si `response` existe y tiene `errors`, entonces procede a ejecutar el bloque de código dentro de la declaración `if`. */
+
     if (response?.errors) {
       toast.error(response.errors[0].message);
       return;

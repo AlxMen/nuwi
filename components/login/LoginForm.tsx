@@ -6,27 +6,39 @@ import { loginUser } from "@/actions/login-user-action";
 import { toast } from "react-toastify";
 import { useMyContext } from "@/src/context/DataProvaider";
 
+/**
+ * Componente del formulario de inicio de sesión.
+ * 
+ * @component
+ * @returns {JSX.Element} Elemento JSX que representa el formulario de inicio de sesión.
+ */
 export default function LoginForm() {
-  /* `const { dataUserLogin } = useMyContext();` está usando el gancho `useMyContext` para acceder a la función `dataUserLogin` desde el proveedor de contexto. Es probable que esta función se use para actualizar el estado de inicio de sesión del usuario o almacenar datos del usuario en el contexto. */
+  /**
+   * Hook para obtener el contexto global de la aplicación.
+   *
+   * @type {Object} dataUserLogin - Función para manejar el inicio de sesión del usuario.
+   */
   const { dataUserLogin } = useMyContext();
+  /**
+   * Hook para manejar la navegación del router.
+   *
+   * @type {Function} push - Función para redirigir a una ruta específica.
+   */
   const { push } = useRouter();
 
   /**
-   * La función `handleActionSubmit` procesa los datos del formulario para el inicio de sesión del usuario, los valida utilizando un esquema y maneja las respuestas de éxito o error según corresponda.
-   * @param {FormData} formData - El parámetro `formData` en la función `handleActionSubmit` es de tipo FormData, que es un objeto JavaScript integrado que se utiliza para representar datos de formulario al enviarlo a través de un formulario HTML. Contiene pares clave-valor que representan campos de formulario y sus valores. En esta función, el objeto es `formData`
-   * @returns La función `handleActionSubmit` devuelve diferentes cosas según ciertas condiciones
+   * Maneja el envío del formulario de inicio de sesión.
+   *
+   * @param {FormData} formData - Datos del formulario de inicio de sesión.
    */
   const handleActionSubmit = async (formData: FormData) => {
-    /* El fragmento de código `const data = { email: formData.get("email"), password: formData.get("password") };` extrae los valores de los campos "email" y "password" de un objeto FormData. */
     const data = {
       email: formData.get("email"),
       password: formData.get("password"),
     };
 
-    /* `const result = UserSchema.safeParse(data);` está utilizando el método `safeParse` proporcionado por el esquema `UserSchema` para validar el objeto `data` con respecto al esquema definido en `UserSchema`. Es probable que este método se utilice para garantizar que los datos proporcionados para el inicio de sesión del usuario (correo electrónico y contraseña) se ajusten a la estructura y al formato esperados definidos en el esquema antes de continuar con el proceso de inicio de sesión. */
     const result = UserSchema.safeParse(data);
 
-    /* El fragmento de código `if (!result.success) { ... }` verifica si la validación de los datos con respecto al `UserSchema` no fue exitosa. Si la validación falla, significa que los datos proporcionados para el inicio de sesión del usuario (correo electrónico y contraseña) no se ajustan a la estructura y el formato esperados definidos en el esquema. */
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
@@ -34,9 +46,8 @@ export default function LoginForm() {
       return;
     }
 
-    /* El fragmento de código que proporcionaste maneja la respuesta después de intentar iniciar sesión con un usuario llamando a la función `loginUser` con los datos del usuario. Aquí se muestra un desglose de lo que hace el código: */
     const response = await loginUser(data);
-    /* El fragmento de código `if (response?.errors) { ... }` verifica si el objeto `response` tiene una propiedaddenominada `errors` mediante encadenamiento opcional (`?.`). Si la propiedad `errors` existe en el objeto `response`, significa que se encontraron errores durante el proceso de inicio de sesión. */
+
     if (response?.errors) {
       response.errors.forEach((issue) => {
         toast.error(issue.message);

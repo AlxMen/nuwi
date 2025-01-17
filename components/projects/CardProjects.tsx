@@ -2,8 +2,6 @@ import Link from "next/link";
 import MenuCard from "../ui/MenuCard";
 import { projects } from "@/src/types";
 
-
-/* La constante `statusStyles` es una matriz de objetos que definen diferentes estilos en función del nombre del estado. Cada objeto de la matriz contiene dos propiedades: `name` y `style`. La propiedad `name` representa el nombre del estado, como "Presentación", "Subsanación", "Inicio", etc. La propiedad `style` contiene las clases CSS que se deben aplicar al elemento cuando el estado coincide con el nombre. */
 const statusStyles = [
   { name: "Presentación", style: " bg-blue-200 border-2 border-blue-500 w-fit p-1 " },
   { name: "Subsanación", style: " bg-violet-300 border-2 border-violet-500 w-fit p-1 " },
@@ -13,9 +11,17 @@ const statusStyles = [
   { name: "Cancelado", style: " bg-red-200 border-2 border-red-500 w-fit p-1 " },
   { name: "Finalizado", style: " bg-amber-300 border-2 border-amber-600 w-fit p-1 " },
 ];
+
+/**
+ * Componente de tarjeta para mostrar información de proyectos.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente.
+ * @param {projects} props.info - Información del proyecto.
+ * @returns {JSX.Element} Elemento JSX que representa una tarjeta de proyecto.
+ */
 export default function CardProjects({ info }: { info: projects }) {
-  /* El fragmento de código `const { nExp, name, status, type, category, candidates, createdexp, lastupdate,
-lastuser } = info;` utiliza la desestructuración de objetos en JavaScript. Extrae propiedades específicas del objeto `info` y las asigna a variables individuales con los mismos nombres. */
+
   const {
     nExp,
     name,

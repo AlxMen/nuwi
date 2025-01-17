@@ -3,7 +3,13 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import React, { Dispatch, SetStateAction } from 'react'
 import { BsExclamationOctagonFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
-
+/**
+ * Maneja la eliminación de un documento.
+ * 
+ * @async
+ * @function handleDeletedDocument
+ * @returns {Promise<void>}
+ */
 type DeleteConfrimProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -11,9 +17,24 @@ type DeleteConfrimProps = {
 };
 
 export default function DeleteConfirm({open, setOpen, id}: DeleteConfrimProps) {
-  
-  const handleDeletedProject = async () => { 
-    const response = await deleteProject(id)
+  /**
+   * Maneja la eliminación de un proyecto.
+   *
+   * @async
+   * @function handleDeletedProject
+   * @returns {Promise<void>}
+   */
+  const handleDeletedProject = async () => {
+    /**
+     * Elimina un proyecto y maneja la respuesta.
+     *
+     * @async
+     * @function
+     * @param {string} id - El ID del proyecto a eliminar.
+     * @param {Dispatch<SetStateAction<boolean>>} setOpen - Función para establecer el estado de apertura del cuadro de diálogo.
+     * @returns {Promise<void>}
+     */
+    const response = await deleteProject(id);
 
     if (response?.errors) {
       toast.error(response.errors.toString());
@@ -21,7 +42,7 @@ export default function DeleteConfirm({open, setOpen, id}: DeleteConfrimProps) {
     }
     toast.success("Proyecto eliminado exitosamente");
     setOpen(false);
-  }
+  };
 
   return (
     <Transition show={open}>
@@ -65,7 +86,8 @@ export default function DeleteConfirm({open, setOpen, id}: DeleteConfrimProps) {
                       </DialogTitle>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                         Tenga cuidado una vez eliminado el registro ya no se puede recuperar ¿Estas seguro de Eliminarlo?
+                          Tenga cuidado una vez eliminado el registro ya no se
+                          puede recuperar ¿Estas seguro de Eliminarlo?
                         </p>
                       </div>
                     </div>

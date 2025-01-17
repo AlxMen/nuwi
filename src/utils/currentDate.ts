@@ -1,6 +1,7 @@
 /**
- * funcion para adjuntar al registro de un documento o creacion de una instancia la fecha actual de ese dia
- * @returns 
+ * Función que obtiene la fecha actual en formato YYYY-MM-DD.
+ *
+ * @returns {string} La fecha actual en formato YYYY-MM-DD.
  */
 export function currentDate() {
   const currentDate = new Date();
@@ -8,5 +9,5 @@ export function currentDate() {
   const month = currentDate.getMonth() + 1; // los meses se cuentan desde 0
   const day = currentDate.getDate();
 
-  return `${year}-${month}-${day}`
+  return `${year}-${month}-${day}`;
 }

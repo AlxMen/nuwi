@@ -9,6 +9,16 @@ import {
 import PaginationPages from "./PaginationPages";
 import RegisterNoFound from "../ui/RegisterNoFound";
 
+/**
+ * Componente de tabla para mostrar los procedimientos de proyectos.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} props.category - Categoría de los proyectos.
+ * @param {string} props.query - Consulta de búsqueda.
+ * @param {number} props.currentPage - Página actual.
+ * @returns {JSX.Element} Elemento JSX que representa la tabla de procedimientos de proyectos.
+ */
 export default async function TableProcceding({
   category,
   query,
@@ -18,21 +28,27 @@ export default async function TableProcceding({
   query: string;
   currentPage: number;
   }) {
-    /* La línea `const proccedings = getProjectByCategoryAndQuery(category, query, currentPage);` está llamando a la función `getProjectByCategoryAndQuery` con los parámetros `category`, `query` y `currentPage` proporcionados. Es probable que esta función sea responsable de obtener una lista de proyectos en función de la categoría, la cadena de consulta y el número de página actual especificados. El resultado almacenado en `proccedings` es probablemente una promesa que se resuelve en una matriz de datos de proyectos en función de los criterios proporcionados. */
+    /**
+     * Obtiene los proyectos por categoría y consulta de búsqueda.
+     */
     const proccedings = getProjectByCategoryAndQuery(
       category,
       query,
       currentPage
     );
-
-    /* La línea `const totalProject = getProjectCount(query, category);` está llamando a la función `getProjectCount` con los parámetros `query` y `category` proporcionados. Esta función es probablemente responsable de devolver el recuento total de proyectos en función de la cadena de consulta y la categoría especificada. El resultado almacenado en `totalProject` es probablemente una promesa que se resuelve en la cantidad total de proyectos que coinciden con los criterios proporcionados. */
+    /**
+     * Obtiene el conteo total de proyectos según la consulta y categoría.
+     */
     const totalProject = getProjectCount(query, category);
-
-    /* La línea `const [dataProcced, total] = await Promise.all([procedings, totalProject]);` usa `Promise.all` para esperar la resolución de varias promesas simultáneamente. En este caso, está esperando los resultados de dos operaciones asincrónicas: `procedings` y `totalProject`. */
+    /**
+     * Espera a que se resuelvan las promesas de los proyectos y el conteo total.
+     */
     const [dataProcced, total] = await Promise.all([proccedings, totalProject]);
-    /* La línea `const pages = Math.ceil(total / 10);` calcula la cantidad total de páginas necesarias para la paginación en función de la cantidad total de proyectos recuperados. */
+    /**
+     * Calcula el número total de páginas.
+     */
     const pages = Math.ceil(total / 10);
-    /* La condición `if (dataProcced.length === 0 && query)` verifica si la matriz `dataProcced` está vacía y si hay una `query` presente. Si ambas condiciones son verdaderas, significa que no se encontraron proyectos según los criterios de búsqueda proporcionados. En este caso, el código está redireccionando al usuario a una URL específica mediante la función `redirect`. La URL a la que se redirecciona se construye dinámicamente con el valor `category`, configurando la página en 1 e incluyendo la consulta de búsqueda para un mayor refinamiento. Es probable que esta redirección tenga como objetivo manejar casos en los que ningún proyecto coincide con la consulta de búsqueda y brindar una experiencia fácil de usar al redirigirlo a una página relevante. */
+
     if (dataProcced.length === 0 && query) {
       redirect(`/home/${category}?page=1&search=${query}`);
     }

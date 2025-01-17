@@ -9,6 +9,13 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+/**
+ * Función principal para poblar la base de datos con datos iniciales.
+ * 
+ * @async
+ * @function main
+ * @returns {Promise<void>}
+ */
 async function main() {
   try {
     await prisma.gobierno.createMany({
@@ -37,6 +44,9 @@ async function main() {
   }
 }
 
+/**
+ * Ejecuta la función principal y maneja la desconexión de Prisma.
+ */
 main()
   .then(async () => {
     await prisma.$disconnect();

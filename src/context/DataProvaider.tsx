@@ -10,24 +10,47 @@ import { DataUser } from "../types";
 import { useRouter } from "next/navigation";
 import { getUserProfile } from "@/actions/login-user-action";
 
+/**
+ * Tipo que define el contexto global de la aplicación.
+ * 
+ * @typedef {Object} GlobalContextType
+ * @property {DataUser} dataGlobal - Datos del usuario global.
+ * @property {Function} closeSection - Función para cerrar la sesión.
+ * @property {Function} dataUserLogin - Función para manejar el inicio de sesión del usuario.
+ */
 type GlobalContextType = {
   dataGlobal: DataUser;
   closeSection: () => void;
   dataUserLogin: (data: string) => void;
 };
 
+/**
+ * Tipo que representa los datos necesarios para el inicio de sesión.
+ * 
+ * @typedef {Object} DataLoginType
+ * @property {number} ext - Extensión del usuario.
+ * @property {string} email - Correo electrónico del usuario.
+ */
 type DataLoginType = {
   ext: number;
   email: string;
 };
 
+/**
+ * Contexto global de la aplicación.
+ * 
+ * @type {React.Context<GlobalContextType | undefined>}
+ */
 export const GlobalContext = createContext<GlobalContextType | undefined>(
   undefined
 );
+
 /**
+ * Proveedor del contexto global de la aplicación.
  * 
- * @param param0 Intancia para controlar datos globales que se usan para determinadas funciones de el aplicativo y para filtrados y separacion de datos 
- * @returns 
+ * @param {Object} props - Propiedades del componente.
+ * @param {ReactNode} props.children - Elementos hijos del componente.
+ * @returns {JSX.Element} Elemento JSX que provee el contexto global.
  */
 export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
   const [dataGlobal, setDataGlobal] = useState<DataUser>({
@@ -39,17 +62,17 @@ export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
   });
 
   /**
-   * 
-   * @param data Recogida de datos al iniciar sesion el ususario en el aplicativo para saber que usuario inicio y que se le debe mostrar dependiendo de sus caracteristicas o rango
+   * Función para manejar el inicio de sesión del usuario.
+   *
+   * @param {DataLoginType} data - Datos necesarios para el inicio de sesión.
    */
   const dataUserLogin = async (data: string) => {
-
     const search = jwt.decode(data) as DataLoginType;
 
     const info: DataLoginType = {
       ext: search.ext,
       email: search.email,
-    }
+    };
     const result = await getUserProfile(info);
 
     if (result?.data) {
@@ -65,10 +88,14 @@ export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
           dataUserLogin(token);
         }
       }, []);
-     }
-   }
+    }
+  }
 
   const { push } = useRouter();
+
+  /**
+   * Función para cerrar la sesión.
+   */
   const closeSection = () => {
     setDataGlobal({
       id: "",
@@ -81,9 +108,7 @@ export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <GlobalContext.Provider
-      value={{ dataGlobal, closeSection, dataUserLogin }}
-    >
+    <GlobalContext.Provider value={{ dataGlobal, closeSection, dataUserLogin }}>
       {children}
     </GlobalContext.Provider>
   );

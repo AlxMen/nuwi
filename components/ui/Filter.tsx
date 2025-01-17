@@ -3,12 +3,21 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
 
+/**
+ * Componente de filtro para buscar y ordenar elementos.
+ * 
+ * @component
+ * @returns {JSX.Element} Elemento JSX que representa el filtro de búsqueda y ordenación.
+ */
 export default function Filter() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+
   /**
-   * 
+   * Maneja la búsqueda de elementos con un retardo para evitar múltiples solicitudes.
+   *
+   * @param {string} search - Término de búsqueda.
    */
   const handleSearch = useDebouncedCallback((search: string) => {
     const params = new URLSearchParams(searchParams);
@@ -20,6 +29,11 @@ export default function Filter() {
     replace(`${pathname}?${params.toString()}`);
   }, 2300);
 
+  /**
+   * Maneja el orden de los elementos.
+   *
+   * @param {string} order - Orden de los elementos.
+   */
   const handleOrder = (order: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("order", order);

@@ -3,7 +3,14 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { Dispatch, SetStateAction } from 'react';
 import { BsExclamationOctagonFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
-
+/**
+ * Propiedades para el componente DeleteConfirm.
+ * 
+ * @typedef {Object} DeleteConfrimProps
+ * @property {boolean} open - Indica si el cuadro de diálogo de confirmación está abierto.
+ * @property {Dispatch<SetStateAction<boolean>>} setOpen - Función para establecer el estado de apertura.
+ * @property {string} id - El ID del elemento a eliminar.
+ */
 type DeleteConfrimProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -11,19 +18,32 @@ type DeleteConfrimProps = {
 };
 
 export default function DeleteConfirmDocument({open, setOpen, id}: DeleteConfrimProps) {
-  
+  /**
+   * Maneja la eliminación de un documento.
+   *
+   * @async
+   * @function handleDeletedDocument
+   * @returns {Promise<void>}
+   */
   const handleDeletedDocument = async () => {
-    
-    const response = await deleteDocument(id)
-
+    /**
+     * Elimina un documento y maneja la respuesta.
+     *
+     * @async
+     * @function
+     * @param {string} id - El ID del documento a eliminar.
+     * @param {Dispatch<SetStateAction<boolean>>} setOpen - Función para establecer el estado de apertura del cuadro de diálogo.
+     * @returns {Promise<void>}
+     */
+    const response = await deleteDocument(id);
     if (response?.errors) {
       toast.error(response.errors.toString());
       setOpen(false);
     }
-    
+
     toast.success("Documento eliminado exitosamente");
     setOpen(false);
-  }
+  };
 
   return (
     <Transition show={open}>
@@ -67,7 +87,8 @@ export default function DeleteConfirmDocument({open, setOpen, id}: DeleteConfrim
                       </DialogTitle>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                         Tenga cuidado una vez eliminado el registro ya no se puede recuperar ¿Estas seguro de Eliminarlo?
+                          Tenga cuidado una vez eliminado el registro ya no se
+                          puede recuperar ¿Estas seguro de Eliminarlo?
                         </p>
                       </div>
                     </div>

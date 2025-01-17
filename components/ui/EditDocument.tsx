@@ -12,6 +12,17 @@ type EditDocumentProps = {
   category: string;
 };
 
+/**
+ * Componente para editar un documento existente.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente.
+ * @param {boolean} props.modal - Estado del modal de edición.
+ * @param {Function} props.setModal - Función para cambiar el estado del modal de edición.
+ * @param {Document} props.info - Información del documento a editar.
+ * @param {string} props.category - Categoría del documento.
+ * @returns {JSX.Element} Elemento JSX que representa el formulario para editar un documento.
+ */
 export default function EditDocument({
   modal,
   setModal,
@@ -19,29 +30,29 @@ export default function EditDocument({
   category
 }: EditDocumentProps) {
   const { name, regisNumber, date, id } = info;
+
   /**
-   * 
-   * @param formData Funcion para modificar los datos de los documentos que se subieron a la nube o servidor solo se modifican los datos que se encuentran en la base de datos nombre del documento, fecha y numero de registro
-   * @returns 
+   * Maneja el envío del formulario para editar un documento.
+   *
+   * @param {FormData} formData - Datos del formulario de edición de documento.
    */
   const handleActionEdit = async (formData: FormData) => {
-
     const data = {
       name: formData.get("namedoc"),
       date: formData.get("date"),
       regisNumber: formData.get("exp"),
-    }
-    
+    };
+
     const result = EditDocumentSchema.safeParse(data);
 
     if (!result.success) {
-       result.error.issues.forEach((issue) => {
-         toast.error(issue.message);
-       });
-       return;
+      result.error.issues.forEach((issue) => {
+        toast.error(issue.message);
+      });
+      return;
     }
 
-    const response = await updateDocument(info.id, result.data)
+    const response = await updateDocument(info.id, result.data);
 
     if (response.errors) {
       toast.error(response.errors[0].message);
@@ -51,7 +62,6 @@ export default function EditDocument({
       setModal(false);
       redirect(`/home/${category}/${id}`);
     }
-    
   };
 
   return (

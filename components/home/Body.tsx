@@ -3,8 +3,19 @@
 import { useMyContext } from "@/src/context/DataProvaider";
 import Image from "next/image";
 
+/**
+ * Componente principal del cuerpo de la página de inicio.
+ * 
+ * @component
+ * @returns {JSX.Element} Elemento JSX que representa el cuerpo de la página de inicio.
+ */
 export default function Body() {
-  /* `const { dataGlobal } = useMyContext();` está desestructurando el valor devuelto por el gancho `useMyContext()`. Está extrayendo la propiedad `dataGlobal` del objeto devuelto por el gancho y asignándola a una variable constante llamada `dataGlobal`. Esto le permite acceder a la propiedad `dataGlobal` directamente sin tener que hacer referencia a todo el objeto cada vez. */
+  
+  /**
+   * Obtiene los datos globales del contexto.
+   *
+   * @type {Object} dataGlobal - Datos globales del usuario.
+   */
   const { dataGlobal } = useMyContext();
 
   return (
