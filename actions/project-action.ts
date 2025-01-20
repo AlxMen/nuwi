@@ -5,10 +5,26 @@ import { EditProjectSchema, ProjectSchema } from "@/src/schema";
 import { currentDate } from "@/src/utils/currentDate";
 import { redirect } from "next/navigation";
 
+/**
+ * Obtiene todas las categorías.
+ * 
+ * @async
+ * @function getCategory
+ * @returns {Promise<Array<Object>>} Lista de categorías.
+ */
 export async function getCategory() {
   return await prisma.category.findMany();
 }
 
+/**
+ * Obtiene el conteo total de proyectos según una consulta y categoría.
+ * 
+ * @async
+ * @function getProjectCount
+ * @param {string} query - Término de búsqueda.
+ * @param {string} category - Categoría del proyecto.
+ * @returns {Promise<number>} Total de proyectos.
+ */
 export async function getProjectCount(query: string, category: string){
   return await prisma.proceeding.count({
     where: {
@@ -37,6 +53,14 @@ export async function getProjectCount(query: string, category: string){
   });
 }
 
+/**
+ * Obtiene un proyecto por su identificador.
+ * 
+ * @async
+ * @function getProjectById
+ * @param {string} id - Identificador del proyecto.
+ * @returns {Promise<Object>} Proyecto encontrado.
+ */
 export async function getProjectById(id: string) {
 
   return await prisma.proceeding.findFirst({
@@ -49,6 +73,16 @@ export async function getProjectById(id: string) {
   });
 }
 
+/**
+ * Obtiene proyectos por categoría y consulta de búsqueda con paginación.
+ * 
+ * @async
+ * @function getProjectByCategoryAndQuery
+ * @param {string} category - Categoría del proyecto.
+ * @param {string} query - Término de búsqueda.
+ * @param {number} currentPage - Página actual.
+ * @returns {Promise<Array<Object>>} Lista de proyectos.
+ */
 export async function getProjectByCategoryAndQuery(
   category: string,
   query: string,
@@ -91,6 +125,15 @@ export async function getProjectByCategoryAndQuery(
   });
 }
 
+/**
+ * Crea un nuevo proyecto en la base de datos.
+ * 
+ * @async
+ * @function createProject
+ * @param {unknown} data - Datos del proyecto.
+ * @param {string} email - Correo electrónico del usuario que crea el proyecto.
+ * @returns {Promise<Object>} Resultado de la creación del proyecto.
+ */
 export async function createProject(data: unknown, email: string) {
   const result = ProjectSchema.safeParse(data);
   if (!result.success) {
@@ -128,6 +171,14 @@ export async function createProject(data: unknown, email: string) {
   }
 }
 
+/**
+ * Actualiza un proyecto existente en la base de datos.
+ * 
+ * @async
+ * @function updateProject
+ * @param {unknown} data - Datos actualizados del proyecto.
+ * @returns {Promise<Object>} Resultado de la actualización del proyecto.
+ */
 export async function updateProject(data: unknown) {
   const result = EditProjectSchema.safeParse(data);
 
@@ -155,6 +206,14 @@ export async function updateProject(data: unknown) {
   }
 }
 
+/**
+ * Elimina un proyecto de la base de datos.
+ * 
+ * @async
+ * @function deleteProject
+ * @param {string} id - Identificador del proyecto a eliminar.
+ * @returns {Promise<Object>} Resultado de la eliminación del proyecto.
+ */
 export async function deleteProject(id: string) {
   const response = await prisma.proceeding.delete({
     where: { id },

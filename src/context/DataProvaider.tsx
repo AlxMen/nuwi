@@ -22,7 +22,7 @@ type GlobalContextType = {
   dataGlobal: DataUser;
   closeSection: () => void;
   dataUserLogin: (data: string) => void;
-};
+}
 
 /**
  * Tipo que representa los datos necesarios para el inicio de sesión.

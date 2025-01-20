@@ -2,9 +2,16 @@
 
 import { prisma } from "@/src/lib/prisma";
 import { CorrectPasswordSchema, DataUserSchema, UserChangeSchema, UserSchema } from "@/src/schema";
-import { error } from "console";
 import jwt from "jsonwebtoken";
 
+/**
+ * Inicia sesión de un usuario.
+ * 
+ * @async
+ * @function loginUser
+ * @param {unknown} data - Datos del usuario para iniciar sesión.
+ * @returns {Promise<Object>} Resultado del inicio de sesión.
+ */
 export async function loginUser(data: unknown) {
   const result = UserSchema.safeParse(data);
 
@@ -38,6 +45,14 @@ export async function loginUser(data: unknown) {
   }
 }
 
+/**
+ * Obtiene el perfil de un usuario.
+ * 
+ * @async
+ * @function getUserProfile
+ * @param {unknown} info - Información del usuario.
+ * @returns {Promise<Object>} Perfil del usuario.
+ */
 export async function getUserProfile(info: unknown) {
   const result = DataUserSchema.safeParse(info);
   
@@ -71,6 +86,15 @@ export async function getUserProfile(info: unknown) {
   }
 }
 
+/**
+ * Actualiza los datos de un usuario.
+ * 
+ * @async
+ * @function updateUserData
+ * @param {unknown} data - Datos actualizados del usuario.
+ * @param {string} id - Identificador del usuario.
+ * @returns {Promise<Object>} Resultado de la actualización del usuario.
+ */
 export async function updateUserData(data: unknown, id: string) { 
   const result = UserChangeSchema.safeParse(data);
 
@@ -102,6 +126,15 @@ export async function updateUserData(data: unknown, id: string) {
   
 }
 
+/**
+ * Cambia la contraseña de un usuario.
+ * 
+ * @async
+ * @function changePasswordUser
+ * @param {unknown} data - Datos de la nueva contraseña.
+ * @param {string} id - Identificador del usuario.
+ * @returns {Promise<Object>} Resultado del cambio de contraseña.
+ */
 export async function changePasswordUser(data: unknown, id: string) {
   const result = CorrectPasswordSchema.safeParse(data)
 
