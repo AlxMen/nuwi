@@ -7,25 +7,28 @@ import { UserChangeSchema } from "@/src/schema";
 import React from "react";
 import { toast } from "react-toastify";
 
+/**
+ * Página de perfil de usuario.
+ * 
+ * @component
+ * @returns {JSX.Element} Elemento JSX que representa la página de perfil de usuario.
+ */
 export default function UserPage() {
-  /* `const { dataGlobal } = useMyContext();` está usando el gancho `useMyContext` para acceder al objeto `dataGlobal` desde el contexto proporcionado por el proveedor de contexto `DataProvaider`. Este objeto probablemente contiene datos globales que se están usando dentro del componente `UserPage`, como información del usuario como nombre, correo electrónico, número de extensión y rol. Al desestructurar `dataGlobal` del resultado de `useMyContext()`, el componente puede acceder y usar estos datos globales dentro de su lógica de representación. */
   const { dataGlobal } = useMyContext();
 
   /**
-   * La función `handleActionSubmit` procesa datos del formulario, los valida utilizando un esquema, actualiza los datos del usuario y muestra mensajes de éxito o error mediante notificaciones emergentes.
-   * @param {FormData} formData - El parámetro `formData` de la función `handleActionSubmit` es de tipo FormData, que se utiliza normalmente para recopilar datos de formularios en un formato de par clave-valor. En este caso, la función extrae los valores "nombre" y "correo electrónico" del objeto FormData para crear un objeto de datos.
-   * @returns La función `handleActionSubmit` devuelve un mensaje de éxito "Datos actualizados correctamente" si los datos se actualizaron correctamente, o devuelve mensajes de error utilizando `toast.error` para cualquier problema de validación o error encontrado durante el proceso.
+   * Maneja el envío del formulario para actualizar los datos del usuario.
+   *
+   * @param {FormData} formData - Datos del formulario de actualización de usuario.
    */
   const handleActionSubmit = async (formData: FormData) => {
-    /* El fragmento de código `const data = { name: formData.get("name"), email: formData.get("email") };` está creando un objeto llamado `data` con propiedades `name` y `email`. Está extrayendo los valores de los campos de formulario con los nombres "name" y "email" del objeto `formData` y asignándolos a las propiedades respectivas en el objeto `data`. */
     const data = {
       name: formData.get("name"),
       email: formData.get("email"),
     };
-    /* `const result = UserChangeSchema.safeParse(data);` está utilizando el método `safeParse` proporcionado por el esquema `UserChangeSchema` para validar el objeto `data` con respecto al esquema definido en `UserChangeSchema`. Es probable que este método se utilice para garantizar que los datos extraídos de los campos del formulario cumplan con la estructura y los tipos de datos esperados definidos en el esquema antes de intentar actualizar los datos del usuario. */
+
     const result = UserChangeSchema.safeParse(data);
 
-    /* El fragmento de código `if (!result.success) { result.error.issues.forEach((issue) => { toast.error(issue.message); }); return; }` maneja el escenario donde la validación de los datos extraídos de los campos del formulario falla según el esquema definido en `UserChangeSchema`. */
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
@@ -33,7 +36,6 @@ export default function UserPage() {
       return;
     }
 
-    /* El fragmento de código `const response = await updateUserData(result.data, dataGlobal.id);` llama a la función `updateUserData` con los datos validados `result.data` y el ID del usuario `dataGlobal.id`. Es probable que esta función envíe una solicitud para actualizar los datos del usuario en el servidor. */
     const response = await updateUserData(result.data, dataGlobal.id);
 
     if (response?.errors) {

@@ -22,6 +22,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "bcrypt": "^5.1.1",
     "formidable": "^3.5.1",
+    "jsdoc": "^4.0.4",
     "jsonwebtoken": "^9.0.2",
     "mintlify": "^4.0.322",
     "next": "^14.2.5",

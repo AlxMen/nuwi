@@ -5,6 +5,18 @@ import NavBar from "@/components/ui/NavBar";
 import { CardsSkeleton } from "@/components/ui/Skeleton";
 import { Suspense } from "react";
 
+/**
+ * Página principal para mostrar los proyectos según la categoría.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente.
+ * @param {Object} props.params - Parámetros de la ruta.
+ * @param {string} props.params.category - Categoría de los proyectos.
+ * @param {Object} props.searchParams - Parámetros de búsqueda.
+ * @param {string} [props.searchParams.search] - Término de búsqueda.
+ * @param {string} [props.searchParams.page] - Página actual.
+ * @returns {JSX.Element} Elemento JSX que representa la página principal de proyectos.
+ */
 export default function ProjectPage({
   params,
   searchParams,
@@ -15,9 +27,13 @@ export default function ProjectPage({
     page?: string;
   };
   }) {
-    /* El fragmento de código `const query = searchParams?.search || "";` establece la variable `query` en el valor de `searchParams.search` si existe; de ​​lo contrario, el valor predeterminado será una cadena vacía `""`. */
+    /**
+     * Término de búsqueda.
+     */
     const query = searchParams?.search || "";
-    /* La línea `const currentPage = Number(searchParams?.page) || 1;` convierte el valor de `searchParams.page` en un número mediante la función `Number()`. */
+    /**
+     * Página actual.
+     */
     const currentPage = Number(searchParams?.page) || 1;
 
     return (
