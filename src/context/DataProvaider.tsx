@@ -22,7 +22,7 @@ type GlobalContextType = {
   dataGlobal: DataUser;
   closeSection: () => void;
   dataUserLogin: (data: string) => void;
-}
+};
 
 /**
  * Tipo que representa los datos necesarios para el inicio de sesión.
@@ -89,7 +89,7 @@ export const GlobalProvaider = ({ children }: { children: ReactNode }) => {
         }
       }, []);
     }
-  }
+  };
 
   const { push } = useRouter();
 

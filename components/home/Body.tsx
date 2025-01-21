@@ -11,11 +11,6 @@ import Image from "next/image";
  */
 export default function Body() {
   
-  /**
-   * Obtiene los datos globales del contexto.
-   *
-   * @type {Object} dataGlobal - Datos globales del usuario.
-   */
   const { dataGlobal } = useMyContext();
 
   return (

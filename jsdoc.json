@@ -2,7 +2,7 @@
   "plugins": [],
   "source": {
     "include": ["src","components","app","prisma","actions"],
-    "includePattern": ".tsx$",
+    "includePattern": ".+\\.ts(doc|x)?$",
     "excludePattern": "(node_modules|docs)"
   },
   "templates": {
