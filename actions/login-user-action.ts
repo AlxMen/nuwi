@@ -19,13 +19,17 @@ export async function loginUser(data: unknown) {
     return { errors: result.error.issues };
   }
 
+  console.log(result.data);
   try {
-    const user = await prisma.user.findUnique({
-      where: {
+     const user = await prisma.user.findUnique({
+       where: {
         email: result.data.email,
         password: result.data.password,
       },
-    });
+      
+     });
+    
+    
     if (!user) {
       return { errors: [{ message: "Usuario o contraseña incorrectos" }] };
     } else {
