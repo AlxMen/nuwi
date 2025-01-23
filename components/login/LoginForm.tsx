@@ -37,6 +37,13 @@ export default function LoginForm() {
       password: formData.get("password"),
     };
 
+    /**
+     * Valida los datos del formulario de inicio de sesión.
+     *
+     * @type {Object} result - Resultado de la validación.
+     * @property {boolean} success - Indica si la validación fue exitosa.
+     * @property {Array} error.issues - Lista de errores de validación.
+     */
     const result = UserSchema.safeParse(data);
 
     if (!result.success) {
@@ -46,6 +53,12 @@ export default function LoginForm() {
       return;
     }
 
+    /**
+     * Envía los datos de inicio de sesión al servidor y maneja la respuesta.
+     *
+     * @param {Object} data - Datos del formulario de inicio de sesión.
+     * @returns {Promise<void>}
+     */
     const response = await loginUser(data);
 
     if (response?.errors) {

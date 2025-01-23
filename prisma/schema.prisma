@@ -1,99 +1,113 @@
+// Generador del cliente Prisma
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client-js" // Proveedor del cliente Prisma
 }
 
+// Fuente de datos para la base de datos MongoDB
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider = "mongodb" // Proveedor de la base de datos
+  url      = env("DATABASE_URL") // URL de conexión a la base de datos, obtenida de las variables de entorno
 }
 
+// Modelo de usuario
 model User {
-  id       String       @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  password String
-  role     String
-  ext      Int
-  email    String       @unique
-  exps     Proceeding[]
+  id       String       @id @default(auto()) @map("_id") @db.ObjectId // Identificador único del usuario
+  name     String       // Nombre del usuario
+  password String       // Contraseña del usuario
+  role     String       // Rol del usuario
+  ext      Int          // Extensión del usuario
+  email    String       @unique // Correo electrónico del usuario, debe ser único
+  exps     Proceeding[] // Relación con el modelo Proceeding
 }
 
+// Modelo de categoría
 model Category {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  index Int
-  slug  String
+  id    String @id @default(auto()) @map("_id") @db.ObjectId // Identificador único de la categoría
+  name  String // Nombre de la categoría
+  index Int    // Índice de la categoría
+  slug  String // Slug de la categoría
 }
 
+// Modelo de procedimiento
 model Proceeding {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
-  nExp       String
-  name       String
-  category   String
-  type       String
-  status     String     @default("Presentación")
-  applicant  String
-  createdexp String
-  lastupdate String
-  userId     String     @db.ObjectId
-  lastuser   User       @relation(fields: [userId], references: [id])
-  documents  Document[]
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId // Identificador único del procedimiento
+  nExp       String     // Número de expediente del procedimiento
+  name       String     // Nombre del procedimiento
+  category   String     // Categoría del procedimiento
+  type       String     // Tipo del procedimiento
+  status     String     @default("Presentación") // Estado del procedimiento, por defecto "Presentación"
+  applicant  String     // Solicitante del procedimiento
+  createdexp String     // Fecha de creación del expediente
+  lastupdate String     // Fecha de última actualización del procedimiento
+  userId     String     @db.ObjectId // Identificador del usuario asociado al procedimiento
+  lastuser   User       @relation(fields: [userId], references: [id]) // Relación con el modelo User
+  documents  Document[] // Relación con el modelo Document
 }
 
+// Modelo de documento
 model Document {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  regisNumber String
-  date        String
-  path        String
-  proceedId   String     @db.ObjectId
-  proceed     Proceeding @relation(fields: [proceedId], references: [id])
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId // Identificador único del documento
+  name        String     // Nombre del documento
+  regisNumber String     // Número de registro del documento
+  date        String     // Fecha del documento
+  path        String     // Ruta del archivo del documento
+  proceedId   String     @db.ObjectId // Identificador del procedimiento asociado
+  proceed     Proceeding @relation(fields: [proceedId], references: [id]) // Relación con el modelo Proceeding
 }
 
+// Modelo de ministerio
 model Ministerio {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId // Identificador único del ministerio
+  name        String  // Nombre del ministerio
+  description String? // Descripción del ministerio (opcional)
 }
 
+// Modelo de gobierno
 model Gobierno {
-  id              String  @id @default(auto()) @map("_id") @db.ObjectId
-  name            String
-  conserjeria     String
-  viceconserjeria String?
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId // Identificador único del gobierno
+  name            String  // Nombre del gobierno
+  conserjeria     String  // Conserjería del gobierno
+  viceconserjeria String? // Viceconserjería del gobierno (opcional)
 }
 
+// Modelo de cabildo
 model Cabildo {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  conserjeria String?
-  servicio    String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId // Identificador único del cabildo
+  conserjeria String? // Conserjería del cabildo (opcional)
+  servicio    String? // Servicio del cabildo (opcional)
 }
 
+// Modelo de ayuntamiento
 model Ayuntamiento {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id   String @id @default(auto()) @map("_id") @db.ObjectId // Identificador único del ayuntamiento
+  name String // Nombre del ayuntamiento
 }
 
+// Modelo de asociaciones ecológicas
 model AsociacionesEco {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  direccion String
-  cp        Int
+  id        String @id @default(auto()) @map("_id") @db.ObjectId // Identificador único de la asociación ecológica
+  name      String // Nombre de la asociación ecológica
+  direccion String // Dirección de la asociación ecológica
+  cp        Int    // Código postal de la asociación ecológica
 }
 
+// Modelo de asociaciones vecinales
 model AsociacionesVec {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  direccion String
-  cp        Int
-  municipio String
+  id        String @id @default(auto()) @map("_id") @db.ObjectId // Identificador único de la asociación vecinal
+  name      String // Nombre de la asociación vecinal
+  direccion String // Dirección de la asociación vecinal
+  cp        Int    // Código postal de la asociación vecinal
+  municipio String // Municipio de la asociación vecinal
 }
 
+// Modelo de asociaciones de caza
 model AsociacionesCaza {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id   String @id @default(auto()) @map("_id") @db.ObjectId // Identificador único de la asociación de caza
+  name String // Nombre de la asociación de caza
 }
 
+// Modelo de emergencia
 model Emergencia {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id   String @id @default(auto()) @map("_id") @db.ObjectId // Identificador único de la emergencia
+  name String // Nombre de la emergencia
 }

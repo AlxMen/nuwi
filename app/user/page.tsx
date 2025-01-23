@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 /**
  * Página de perfil de usuario.
- * 
+ *
  * @component
  * @returns {JSX.Element} Elemento JSX que representa la página de perfil de usuario.
  */
@@ -27,6 +27,13 @@ export default function UserPage() {
       email: formData.get("email"),
     };
 
+    /**
+     * Valida los datos del formulario de actualización de usuario.
+     *
+     * @type {Object} result - Resultado de la validación.
+     * @property {boolean} success - Indica si la validación fue exitosa.
+     * @property {Array} error.issues - Lista de errores de validación.
+     */
     const result = UserChangeSchema.safeParse(data);
 
     if (!result.success) {
@@ -36,6 +43,13 @@ export default function UserPage() {
       return;
     }
 
+    /**
+     * Envía los datos actualizados del usuario al servidor.
+     *
+     * @param {Object} result.data - Datos validados del usuario.
+     * @param {string} dataGlobal.id - Identificador del usuario.
+     * @returns {Promise<void>}
+     */
     const response = await updateUserData(result.data, dataGlobal.id);
 
     if (response?.errors) {
